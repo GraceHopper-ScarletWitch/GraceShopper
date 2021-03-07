@@ -44,12 +44,12 @@ describe('Cart routes', () => {
         color: 'red',
         cut: 'skinny',
         price: 20.0,
-        quantity: 10
+        inventory: 10
       })
       const res = await request(app)
         .put('/api/cart/1')
         .send({
-          id: newProduct.id
+          productId: newProduct.id
         })
         .expect(200)
       expect(res.body.products.length).to.be.equal(1)
@@ -62,25 +62,25 @@ describe('Cart routes', () => {
         color: 'red',
         cut: 'skinny',
         price: 20.0,
-        quantity: 10
+        inventory: 10
       })
       const secondNewProduct = await Product.create({
         size: 'small',
         color: 'blue light wash',
         cut: 'skinny',
         price: 30.0,
-        quantity: 10
+        inventory: 10
       })
       await request(app)
         .put('/api/cart/1')
         .send({
-          id: newProduct.id
+          productId: newProduct.id
         })
         .expect(200)
       await request(app)
         .put('/api/cart/1')
         .send({
-          id: secondNewProduct.id
+          productId: secondNewProduct.id
         })
         .expect(200)
       const res = await request(app)
@@ -96,24 +96,24 @@ describe('Cart routes', () => {
         color: 'red',
         cut: 'skinny',
         price: 20.0,
-        quantity: 10
+        inventory: 10
       })
       await request(app)
         .put('/api/cart/1')
         .send({
-          id: newProduct.id
+          productId: newProduct.id
         })
         .expect(200)
       await request(app)
         .put('/api/cart/1')
         .send({
-          id: newProduct.id
+          productId: newProduct.id
         })
         .expect(200)
       await request(app)
         .put('/api/cart/1')
         .send({
-          id: newProduct.id
+          productId: newProduct.id
         })
         .expect(200)
       const res = await request(app)

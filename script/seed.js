@@ -18,7 +18,7 @@ async function seed() {
       size: 'small',
       color: 'red',
       cut: 'skinny',
-      price: 20.0,
+      price: 1900,
       inventory: 10
     },
     {
@@ -26,7 +26,7 @@ async function seed() {
       size: 'small',
       color: 'blue light wash',
       cut: 'skinny',
-      price: 30.0,
+      price: 2900,
       inventory: 10
     },
     {
@@ -34,7 +34,7 @@ async function seed() {
       size: 'medium',
       color: 'blue dark wash',
       cut: 'ripped',
-      price: 30.0,
+      price: 2900,
       inventory: 10
     },
     {
@@ -42,7 +42,7 @@ async function seed() {
       size: 'large',
       color: 'floral',
       cut: 'skinny',
-      price: 30.0,
+      price: 3000,
       inventory: 10
     },
     {
@@ -50,7 +50,7 @@ async function seed() {
       size: 'large',
       color: 'pink',
       cut: 'skinny',
-      price: 30.0,
+      price: 3400,
       inventory: 10
     },
     {
@@ -58,7 +58,7 @@ async function seed() {
       size: 'small',
       color: 'black',
       cut: 'bootcut',
-      price: 30.0,
+      price: 2900,
       inventory: 10
     }
   ]
@@ -80,6 +80,8 @@ async function seed() {
   await createdCarts[0].addProduct(createdProducts[0])
   await createdCarts[0].addProduct(createdProducts[1])
   await createdCarts[0].addProduct(createdProducts[2])
+
+  await createdCarts[0].save()
 
   console.log(`created ${createdCarts.length} carts`)
 
