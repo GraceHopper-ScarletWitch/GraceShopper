@@ -16,7 +16,8 @@ router.get('/', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
   try {
     const product = await Product.findByPk(req.params.id)
-    res.send(product)
+    if (!product) res.sendStatus(404)
+    else res.send(product)
   } catch (err) {
     next(err)
   }

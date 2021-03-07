@@ -2,7 +2,7 @@ import React from 'react'
 import {getProduct} from '../store/singleProduct'
 import {connect} from 'react-redux'
 
-class SingleProduct extends React.Component {
+export class SingleProduct extends React.Component {
   async componentDidMount() {
     await this.props.getProduct(this.props.match.params.id)
   }
@@ -11,11 +11,11 @@ class SingleProduct extends React.Component {
     const product = this.props.product
     return (
       <div>
-        <img src={product.imageUrl} alt={product.name} width={200} />
+        <img src={product.imageUrl} alt="image of product" width={200} />
         <p>Size: {product.size}</p>
         <p>Color: {product.color} </p>
         <p>Cut: {product.cut}</p>
-        <p>Price: {product.price}</p>
+        <p>Price: {product.price / 100}</p>
         <p>Quantity: {product.quantity}</p>
       </div>
     )
