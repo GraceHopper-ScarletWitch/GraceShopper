@@ -4,12 +4,31 @@ const {CartProducts} = require('./cartProducts')
 
 const Cart = db.define('cart', {
   subTotal: {
-    type: Sequelize.DECIMAL(10, 2), // update
-    defaultValue: 0
+    type: Sequelize.INTEGER, // update
+    defaultValue: 0,
+    validate: {
+      min: 0
+    }
   },
   active: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
+  }
+})
+
+Cart.beforeBulkCreate((carts, options) => {
+  for (const cart of carts) {
+    if (cart.subTotal) {
+      cart.subTotal += cart.subTotal
+    }
+  }
+
+  // Add `memberSince` to updateOnDuplicate otherwise it won't be persisted
+  if (
+    options.updateOnDuplicate &&
+    !options.updateOnDuplicate.includes('subTotal')
+  ) {
+    options.updateOnDuplicate.push('subTotal')
   }
 })
 
