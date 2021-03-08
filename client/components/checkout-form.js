@@ -34,7 +34,7 @@ export class Checkout extends React.Component {
   handleSubmit(evt) {
     evt.preventDefault()
     this.props.isLoggedIn
-      ? this.props.sendUserInfo(this.props.user.id, this.state)
+      ? this.props.sendUserInfo(this.state)
       : console.log('order submitted!')
   }
 
@@ -104,7 +104,7 @@ const mapState = state => ({
 })
 
 const mapDispatch = dispatch => ({
-  sendUserInfo: (userId, info) => dispatch(sendUserInfo(userId, info))
+  sendUserInfo: info => dispatch(sendUserInfo(info))
 })
 
 export default connect(mapState, mapDispatch)(Checkout)

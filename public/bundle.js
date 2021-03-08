@@ -894,7 +894,7 @@ function (_React$Component) {
     key: "handleSubmit",
     value: function handleSubmit(evt) {
       evt.preventDefault();
-      this.props.isLoggedIn ? this.props.sendUserInfo(this.props.user.id, this.state) : console.log('order submitted!');
+      this.props.isLoggedIn ? this.props.sendUserInfo(this.state) : console.log('order submitted!');
     }
   }, {
     key: "render",
@@ -955,8 +955,8 @@ var mapState = function mapState(state) {
 
 var mapDispatch = function mapDispatch(dispatch) {
   return {
-    sendUserInfo: function sendUserInfo(userId, info) {
-      return dispatch(Object(_store_user__WEBPACK_IMPORTED_MODULE_3__["sendUserInfo"])(userId, info));
+    sendUserInfo: function sendUserInfo(info) {
+      return dispatch(Object(_store_user__WEBPACK_IMPORTED_MODULE_3__["sendUserInfo"])(info));
     }
   };
 };
@@ -2155,8 +2155,18 @@ var logout = function logout() {
       };
     }()
   );
-};
-var sendUserInfo = function sendUserInfo(userId, info) {
+}; // export const sendUserInfo = (userId, info) => {
+//   return async dispatch => {
+//     try {
+//       const {data: user} = await axios.put(`/api/users/${userId}`, info)
+//       dispatch(updateUserInfo(user))
+//     } catch (err) {
+//       console.error(err)
+//     }
+//   }
+// }
+
+var sendUserInfo = function sendUserInfo(info) {
   return (
     /*#__PURE__*/
     function () {
@@ -2171,7 +2181,7 @@ var sendUserInfo = function sendUserInfo(userId, info) {
               case 0:
                 _context4.prev = 0;
                 _context4.next = 3;
-                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.put("/api/users/".concat(userId), info);
+                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.put('/api/users', info);
 
               case 3:
                 _ref5 = _context4.sent;
