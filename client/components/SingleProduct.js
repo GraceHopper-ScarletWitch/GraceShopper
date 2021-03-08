@@ -16,7 +16,7 @@ export class SingleProduct extends React.Component {
         <p>Color: {product.color} </p>
         <p>Cut: {product.cut}</p>
         <p>Price: {product.price / 100}</p>
-        <p>Quantity: {product.quantity}</p>
+        <p>Inventory: {product.inventory}</p>
       </div>
     )
   }

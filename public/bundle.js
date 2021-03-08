@@ -557,7 +557,7 @@ function (_React$Component) {
         src: product.imageUrl,
         alt: "image of product",
         width: 200
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Size: ", product.size), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Color: ", product.color, " "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Cut: ", product.cut), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Price: ", product.price / 100), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Quantity: ", product.quantity));
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Size: ", product.size), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Color: ", product.color, " "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Cut: ", product.cut), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Price: ", product.price / 100), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Inventory: ", product.inventory));
     }
   }]);
 
