@@ -8,7 +8,7 @@ router.get('/:id', async (req, res, next) => {
     const currentCart = await Cart.findByPk(req.params.id, {
       include: Product
     })
-    await currentCart.save()
+    // await currentCart.save()
     res.send(currentCart)
   } catch (err) {
     next(err)

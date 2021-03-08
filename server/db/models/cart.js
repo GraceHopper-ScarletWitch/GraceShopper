@@ -15,6 +15,27 @@ const Cart = db.define('cart', {
     defaultValue: false
   }
 })
+// Cart.afterBulkCreate(async (cart) => {
+//   console.log('afterBulkCreateProduct', cart)
+//   const add = await cart.addProduct(3)
+//   const items = await cart.getProducts()
+//   console.log('items', items)
+//   console.log('add', add)
+//console.log('in the beforeBulkCreate', cart)
+// for (const cart of carts) {
+//   if (cart.subTotal) {
+//     cart.subTotal += //procuct.price
+//   }
+// }
+
+// //  updateOnDuplicate otherwise it won't be persisted
+// if (
+//   options.updateOnDuplicate &&
+//   !options.updateOnDuplicate.includes('subTotal')
+// ) {
+//   options.updateOnDuplicate.push('subTotal')
+// }
+//})
 
 Cart.beforeBulkCreate((carts, options) => {
   for (const cart of carts) {
@@ -53,9 +74,9 @@ Cart.beforeSave(async cart => {
   const items = await cart.getProducts({include: CartProducts})
   let total = 0
   items.forEach(item => {
-    total += +item.price * item.cartProducts.quantity
+    total += item.price * item.cartProducts.quantity
   })
-  cart.subTotal = parseFloat(total).toFixed(2)
+  cart.subTotal = total / 100
   return cart
 })
 
