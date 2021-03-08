@@ -31,3 +31,24 @@ router.get('/:id', adminMiddleware, async (req, res, next) => {
     next(err)
   }
 })
+
+router.put('/:userId', async (req, res, next) => {
+  try {
+    await User.update(
+      {
+        name: req.body.name,
+        delivery: req.body.address,
+        phone: req.body.phone
+      },
+      {
+        where: {
+          id: req.params.userId
+        }
+      }
+    )
+    const user = await User.findByPk(req.params.userId)
+    res.json(user)
+  } catch (err) {
+    next(err)
+  }
+})
