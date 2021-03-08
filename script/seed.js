@@ -82,7 +82,7 @@ async function seed() {
   await createdCarts[0].addProduct(createdProducts[2])
 
   console.log(`created ${createdCarts.length} carts`)
-
+  console.log(createdCarts)
   console.log(`seeded successfully`)
 }
 

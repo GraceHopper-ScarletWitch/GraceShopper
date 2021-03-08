@@ -29,15 +29,29 @@ router.post('/', async (req, res, next) => {
     next(error)
   }
 })
+//all users have  a cart...
+// router.post('/', async (req, res, next) => {
+//   try {
+//     //shouldnt userId be in req.body?
+//     //would cart be created when we have a new user
+//so a user thats not logged in is that more a cookies kind of thingwhen it comes to holding their cart items
+//     //const {}
+//     //if cart exist then we look for
+//     if(cart){}
+//   }
+//   catch(err){next(err)}}
 
 // PUT /api/cart/:cartId  <---- make more concise (less API calls/ use instanc method)
 // *** can possibly be turned into an instance method **
 // I feel like I can rewrite this to be more concise...
 router.put('/:cartId', async (req, res, next) => {
   try {
+    //access cart and whats inside
     const currentCart = await Cart.findByPk(req.params.cartId, {
       include: Product
     })
+    //Number() can be used to convert JavaScript variables to numbers
+    const productId = req.body.productId
     if (await currentCart.containsProduct(Number(req.body.productId))) {
       const productInCart = await CartProducts.findOne({
         where: {
@@ -45,11 +59,15 @@ router.put('/:cartId', async (req, res, next) => {
           productId: req.body.productId
         }
       })
+      // we want to update or add product
       productInCart.quantity += 1
       await productInCart.save()
-    } else {
-      await currentCart.addProduct(req.body.productId)
     }
+    // } else {
+    //   await currentCart.addProduct(req.body.productId)
+    // }
+    //
+    await Cart.prototype.addProductToCart(productId, currentCart)
     const updatedCart = await Cart.findByPk(req.params.cartId, {
       include: Product
     })
@@ -81,22 +99,30 @@ router.put('/checkout/:cartId', async (req, res, next) => {
 router.put('/removeItem/:cartId', async (req, res, next) => {
   try {
     const itemToRemove = await CartProducts.findByPk(req.body.productId)
+    //we call removeProductFromCart
+    //if product not found send error message
+    console.log('item to remove', itemToRemove)
     if (!itemToRemove) {
       res.status(404).send('not found')
-    } else if (itemToRemove.quantity > 1) {
-      itemToRemove.quantity -= 1
-      await itemToRemove.save()
-      const currentCart = await Cart.findByPk(req.params.cartId, {
-        include: Product
-      })
-      await currentCart.save()
-    } else {
-      itemToRemove.destroy()
-      const currentCart = await Cart.findByPk(req.params.cartId, {
-        include: Product
-      })
-      await currentCart.save()
+      //LINES 101 TO 115 MAY BE REMOVED IF SATISFACRORY PROTOTYPE FUNCTION
+      // } else if (itemToRemove.quantity > 1) {
+      //   itemToRemove.quantity -= 1
+      //   await itemToRemove.save()
+      //   const currentCart = await Cart.findByPk(req.params.cartId, {
+      //     include: Product,
+      //   })
+      //   await currentCart.save()
+      // } else {
+      //   // if item quantity is ===1?
+      //   itemToRemove.destroy()
+      //   //after I destroy i want to update
+
+      //   const currentCart = await Cart.findByPk(req.params.cartId, {
+      //     include: Product,
+      //   })
+      //   await currentCart.save()
     }
+    await Cart.prototype.removeProductFromCart(itemToRemove)
     const currentCart = await Cart.findByPk(req.params.cartId, {
       include: Product
     })

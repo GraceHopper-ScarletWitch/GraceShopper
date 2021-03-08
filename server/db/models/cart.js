@@ -4,7 +4,7 @@ const {CartProducts} = require('./cartProducts')
 
 const Cart = db.define('cart', {
   subTotal: {
-    type: Sequelize.INTEGER, // update
+    type: Sequelize.DECIMAL, // update
     defaultValue: 0,
     validate: {
       min: 0
@@ -31,6 +31,23 @@ Cart.beforeBulkCreate((carts, options) => {
     options.updateOnDuplicate.push('subTotal')
   }
 })
+
+Cart.prototype.addProductToCart = async function(productId, currentCart) {
+  await currentCart.addProduct(productId)
+}
+
+Cart.prototype.removeProductFromCart = async function(itemToRemove) {
+  //if item is found and quantity is >1 proceed to remove item
+  if (itemToRemove.quantity > 1) {
+    //subtract item
+    itemToRemove.quantity -= 1
+    //save the new state of cart
+    await itemToRemove.save()
+  } else {
+    //else if item quantity is 1 destroy the presence of item in cart
+    itemToRemove.destroy()
+  }
+}
 
 Cart.beforeSave(async cart => {
   const items = await cart.getProducts({include: CartProducts})
