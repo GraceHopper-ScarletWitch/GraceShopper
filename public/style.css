@@ -75,10 +75,66 @@ form div {
   cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'  width='40' height='48' viewport='0 0 100 100' style='fill:black;font-size:24px;'><text y='50%'>👖</text></svg>")
       16 0,
     auto;
-  /*!emojicursor.app*/ /* might be fun to put in a "jeans" icon on hover! */
   box-shadow: 1px 1px 2px black;
 }
 
 .cart-product-quantity {
   font-size: smaller;
+}
+
+.cart-checkout-button {
+  padding: 5px;
+}
+
+/* All Products Styles */
+.all-products-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 75%;
+}
+
+.all-products-item {
+  margin: 10px;
+}
+
+.all-products-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.all-products-image {
+  max-height: 250px;
+}
+
+.all-products-content {
+  padding: 2px;
+  font-size: 12px;
+  color: black;
+}
+
+/* Single Product Styles */
+.single-product-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px;
+}
+.single-product-image img {
+  width: 250px;
+}
+.single-product-content {
+  margin-left: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.single-product-content div {
+  margin-top: 5px;
+}
+
+.single-product-title {
+  border-bottom: 1px black solid;
 }
