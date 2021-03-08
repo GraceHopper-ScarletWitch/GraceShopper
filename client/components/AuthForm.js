@@ -1,6 +1,7 @@
 import React from 'react'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
+import CssBaseline from '@material-ui/core/CssBaseline'
 import TextField from '@material-ui/core/TextField'
 import Link from '@material-ui/core/Link'
 import Grid from '@material-ui/core/Grid'
@@ -38,6 +39,7 @@ const AuthForm = props => {
   const {handleSubmit, error, displayName, name} = props
   return (
     <Container component="main" maxWidth="xs">
+      <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
@@ -87,21 +89,18 @@ const AuthForm = props => {
           >
             {displayName}
           </Button>
-          <a href="/auth/google">{displayName} with Google</a>
-          <Grid container justify="center">
-            <Grid item>
-              {displayName === 'Sign Up' ? (
+
+          {displayName === 'Sign Up' ? (
+            <Grid container justify="center">
+              <Grid item>
                 <Link href="/login" variant="body2">
                   Already have an account? Sign in
                 </Link>
-              ) : (
-                <Link href="/signup" variant="body2">
-                  Don't have an account? Sign up
-                </Link>
-              )}
+              </Grid>
             </Grid>
-          </Grid>
+          ) : null}
         </form>
+        <a href="/auth/google">{displayName} with Google</a>
       </div>
       <Box mt={5} />
     </Container>
