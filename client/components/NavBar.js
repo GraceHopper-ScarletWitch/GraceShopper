@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-export const NavBar = ({isLoggedIn, handleLogout}) => {
+export const NavBar = ({isLoggedIn, logout}) => {
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = React.useState(null)
 
@@ -37,6 +37,11 @@ export const NavBar = ({isLoggedIn, handleLogout}) => {
 
   const handleClose = () => {
     setAnchorEl(null)
+  }
+
+  const handleLogout = evt => {
+    logout()
+    handleClick(evt)
   }
 
   return (
@@ -72,7 +77,6 @@ export const NavBar = ({isLoggedIn, handleLogout}) => {
               >
                 <Mood />
               </IconButton>
-              {/* drop down menu functionality */}
               <Menu
                 id="simple-menu"
                 anchorEl={anchorEl}
@@ -81,7 +85,11 @@ export const NavBar = ({isLoggedIn, handleLogout}) => {
                 onClose={handleClose}
               >
                 <MenuItem onClick={handleClose}>My Account</MenuItem>
-                <MenuItem component={Link} to="/orderhistory">
+                <MenuItem
+                  to="/orderhistory"
+                  component={Link}
+                  onClick={handleClose}
+                >
                   Order History
                 </MenuItem>
                 <MenuItem onClick={handleLogout}>Log Out</MenuItem>
@@ -121,7 +129,7 @@ const mapState = state => ({
 })
 
 const mapDispatch = dispatch => ({
-  handleLogout: () => dispatch(logout())
+  logout: () => dispatch(logout())
 })
 
 export default connect(mapState, mapDispatch)(NavBar)
