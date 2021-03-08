@@ -12,7 +12,15 @@ export class AllUsers extends React.Component {
 
   render() {
     const {users} = this.props
-    return <div>{users.map(user => <div key={user.id}>{user.email}</div>)}</div>
+    return (
+      <div>
+        {users.map(user => (
+          <div key={user.id}>
+            <Link to={`/admin/users/${user.id}`}>{user.email}</Link>
+          </div>
+        ))}
+      </div>
+    )
   }
 }
 

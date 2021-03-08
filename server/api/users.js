@@ -24,7 +24,15 @@ router.get('/', adminMiddleware, async (req, res, next) => {
 router.get('/:id', adminMiddleware, async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.id, {
-      attributes: ['name', 'delivery', 'billing', 'userStatus', 'id', 'email']
+      attributes: [
+        'name',
+        'delivery',
+        'billing',
+        'userStatus',
+        'id',
+        'email',
+        'phone'
+      ]
     })
     res.send(user)
   } catch (err) {
