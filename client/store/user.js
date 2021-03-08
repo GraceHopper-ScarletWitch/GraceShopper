@@ -57,18 +57,6 @@ export const logout = () => async dispatch => {
   }
 }
 
-// export const sendUserInfo = (userId, info) => {
-//   return async dispatch => {
-//     try {
-//       const {data: user} = await axios.put(`/api/users/${userId}`, info)
-
-//       dispatch(updateUserInfo(user))
-//     } catch (err) {
-//       console.error(err)
-//     }
-//   }
-// }
-
 export const sendUserInfo = info => {
   return async dispatch => {
     try {
