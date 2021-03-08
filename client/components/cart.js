@@ -5,6 +5,7 @@ import {
   getCartWithItemRemoved,
   getCartWithItemAdded
 } from '../store/cart'
+import {Link} from 'react-router-dom'
 
 // get userId from state through mapStateToProps and update thunk to incorporate userId
 export class Cart extends React.Component {
@@ -43,7 +44,7 @@ export class Cart extends React.Component {
                     <div>Cut: {product.cut}</div>
                     <div>Color: {product.color}</div>
                     <div>Size: {product.size}</div>
-                    <b>Item Price: </b> ${product.price}
+                    <b>Item Price: </b> ${product.price / 100}
                   </div>
                   <div className="cart-button">
                     <button
@@ -81,6 +82,10 @@ export class Cart extends React.Component {
             : 'Oh no! Your cart is empty. Time to go shopping!!'
           : 'Oh no! Your cart is empty. Time to go shopping!'}
         <h3>Subtotal: ${this.props.cart.subTotal}</h3>
+        <h3>Make them Mine!</h3>
+        <button type="button" className="cart-checkout-button">
+          <Link to="/checkout">Check Me Out!</Link>
+        </button>
       </div>
     )
   }
