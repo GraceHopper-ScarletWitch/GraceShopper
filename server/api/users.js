@@ -3,6 +3,7 @@ const {User} = require('../db/models')
 const adminMiddleware = require('./adminMiddleware')
 module.exports = router
 
+// GET /api/users
 router.get('/', adminMiddleware, async (req, res, next) => {
   try {
     // if (!req.user || req.user.userStatus !== 'admin') return res.sendStatus(401)
@@ -13,7 +14,19 @@ router.get('/', adminMiddleware, async (req, res, next) => {
       // send everything to anyone who asks!
       attributes: ['id', 'email']
     })
-    res.json(users)
+    res.send(users)
+  } catch (err) {
+    next(err)
+  }
+})
+
+// GET /api/users/:id
+router.get('/:id', adminMiddleware, async (req, res, next) => {
+  try {
+    const user = await User.findByPk(req.params.id, {
+      attributes: ['name', 'delivery', 'billing', 'userStatus', 'id', 'email']
+    })
+    res.send(user)
   } catch (err) {
     next(err)
   }
