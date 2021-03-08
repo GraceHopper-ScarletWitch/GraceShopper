@@ -19,23 +19,31 @@ export class AllProducts extends React.Component {
     return (
       <div id="jeans">
         <h2>All The Awesome Jeans Are Here!</h2>
-
-        {/* our map of jeans will go here  */}
-        {products.map(product => (
-          <div key={product.id}>
-            <Link to={`/products/${product.id}`}>
-              <img
-                src={product.imageUrl}
-                alt={product.name}
-                style={{width: '200px'}}
-              />
-
-              <h5>
-                Style: {product.color} {product.cut}
-              </h5>
-            </Link>
-          </div>
-        ))}
+        <div className="all-products-container">
+          {products.map(product => (
+            <div key={product.id} className="all-products-item">
+              <Link
+                to={`/products/${product.id}`}
+                className="all-products-content"
+              >
+                <img
+                  src={product.imageUrl}
+                  alt={product.name}
+                  // style={{width: '200px'}}
+                  className="all-products-image"
+                />
+                <div className="all-products-style all-products-content">
+                  <div>
+                    Style: {product.color} {product.cut}
+                  </div>
+                </div>
+                <div className="all-products-price all-products-content">
+                  <div>Price: {product.price / 100}</div>
+                </div>
+              </Link>
+            </div>
+          ))}
+        </div>
       </div>
     )
   }
