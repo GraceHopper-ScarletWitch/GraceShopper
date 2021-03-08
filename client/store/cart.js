@@ -7,7 +7,6 @@ const GOT_CART = 'GOT_CART'
 
 // ACTIONS CREATORS
 export const gotCart = cart => {
-  console.log('GOT CART CALLED')
   return {
     type: GOT_CART,
     cart
