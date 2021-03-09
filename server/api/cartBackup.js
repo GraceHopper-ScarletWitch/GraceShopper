@@ -2,25 +2,17 @@ const router = require('express').Router()
 const {Cart, CartProducts, Product, User} = require('../db/models')
 module.exports = router
 
-// TODO: refactor this route so that it uses req.user instead of userId, delete userId
-// TODO: to check for guest user you can see if req.user has a value
-// TODO: remove check for hardcoded '1'
-
 // GET /api/cart/:id  update use userId <-- rewrite route to search for cart based off of userId
 router.get('/:userId', async (req, res, next) => {
-  console.log('This is the req.user', req.user)
-  console.log('USER ID', req.params.userId)
   try {
     if (req.params.userId !== '1') {
       console.log('NOT 1')
       const [userCart] = await Cart.findAll({
-        include: Product,
         where: {
-          userId: Number(req.params.userId),
+          userId: req.params.userId,
           active: true
         }
       })
-      console.log('IN THE GET ROUTE', userCart)
       res.send(userCart)
     } else if (req.params.userId === '1' && !req.session.cart) {
       console.log('IN THE ELSE IF')
@@ -42,10 +34,6 @@ router.get('/:userId', async (req, res, next) => {
   }
 })
 
-// TODO: remove references to '1'
-// TODO: check if authenticated (if req.user should have access to this cart)
-// TODO: guest user if !req.user, you'll need to check if a session cart already exists
-
 // POST /api/cart/
 // Write route to create new cart
 // somehow this needs to be linked to a user.
@@ -53,7 +41,7 @@ router.get('/:userId', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
   try {
     const newCart = await Cart.create(req.body) //userId
-    console.log('IS THIS THE LOG??', newCart)
+    console.log(newCart)
     if (req.body.userId === '1') {
       req.session.cart = newCart
     } else {
@@ -65,10 +53,6 @@ router.post('/', async (req, res, next) => {
     next(error)
   }
 })
-
-// TODO: remove references to '1'
-// TODO: check if authenticated (if req.user should have access to this cart)
-// TODO: guest user if !req.user
 
 // PUT /api/cart/:cartId  <---- make more concise (less API calls/ use instanc method)
 // *** can possibly be turned into an instance method **
@@ -101,10 +85,6 @@ router.put('/:cartId', async (req, res, next) => {
   }
 })
 
-// TODO: remove references to '1'
-// TODO: check if authenticated (if req.user should have access to this cart)
-// TODO: guest user if !req.user
-
 // PUT /api/cart/checkout/:cartId
 // Need to add functionality to deduct from the product "inventory" when someone purchases an item
 router.put('/checkout/:cartId', async (req, res, next) => {
@@ -121,10 +101,6 @@ router.put('/checkout/:cartId', async (req, res, next) => {
     next(error)
   }
 })
-
-// TODO: remove references to '1'
-// TODO: check if authenticated (if req.user should have access to this cart)
-// TODO: guest user if !req.user
 
 // Path to delete indiviual items? Should I make new routes for CartProducts or just include them all here?
 // PUT /api/cart/removeItem/:cartId <--- Remove repeating code (if you can figure out how... )
