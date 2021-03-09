@@ -5,13 +5,13 @@ import PropTypes from 'prop-types'
 import {me} from './store'
 import SingleProduct from './components/SingleProduct'
 import AllProducts from './components/AllProducts'
-import Checkout from './components/checkout-form'
+// import Checkout from './components/checkout-form'
+import Checkout from './components/CheckoutPage'
 import Cart from './components/cart'
 import AllUsers from './components/AllUsers'
 import {SignUp, LogIn} from './components'
 import SingleUser from './components/SingleUser'
 import OrderHistory from './components/OrderHistory'
-
 import {getCart} from './store/cart'
 
 /**
@@ -26,15 +26,14 @@ class Routes extends Component {
     } else {
       console.log('NO USER ID', this.props.user)
     }
-    this.props.loadCart(this.props.user.id ? this.props.user.id : '1') // TODO: Remove userId
+    this.props.loadCart()
   }
-
   componentDidUpdate(prevProps) {
     const user = this.props.user
     console.log('IN THE UPDATE', user)
     if (!prevProps.user.id && user.id) {
       console.log('IN THE UPDATE', this.props.user)
-      this.props.loadCart(this.props.user.id ? this.props.user.id : '1') // TODO: Remove userId
+      this.props.loadCart()
     }
   }
 
@@ -50,12 +49,13 @@ class Routes extends Component {
         <Route path="/checkout" component={Checkout} />
         <Route path="/cart" component={Cart} />
         <Route path="/orderhistory" component={OrderHistory} />
+        <Route path="/home" component={AllProducts} />
+        <Route exact path="/" component={AllProducts} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
             <Route exact path="/admin/users" component={AllUsers} />
             <Route exact path="/admin/users/:id" component={SingleUser} />
-            <Route path="/home" component={AllProducts} />
           </Switch>
         )}
         {/* Displays our AllProducts component as a fallback */}
@@ -82,8 +82,8 @@ const mapDispatch = dispatch => {
     loadInitialData() {
       dispatch(me())
     },
-    loadCart(userId) {
-      dispatch(getCart(userId))
+    loadCart() {
+      dispatch(getCart())
     }
   }
 }

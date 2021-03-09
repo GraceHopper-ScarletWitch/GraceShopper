@@ -43,7 +43,7 @@ router.put('/', async (req, res, next) => {
   try {
     await req.user.update({
       name: req.body.name,
-      delivery: req.body.address,
+      delivery: req.body.delivery,
       phone: req.body.phone
     })
 
