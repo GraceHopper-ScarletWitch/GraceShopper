@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {sendUserInfo} from '../store/user'
-import PaymentForm from './PaymentInfo'
+import {getCheckedoutCart} from '../store/cart'
 
 export class Checkout extends React.Component {
   constructor(props) {
@@ -28,6 +28,7 @@ export class Checkout extends React.Component {
     this.props.isLoggedIn
       ? this.props.sendUserInfo(this.state)
       : console.log('order submitted!')
+    this.props.checkout()
   }
 
   render() {
@@ -98,6 +99,7 @@ const mapState = state => ({
 })
 
 const mapDispatch = dispatch => ({
+  checkout: () => dispatch(getCheckedoutCart()),
   sendUserInfo: info => dispatch(sendUserInfo(info))
 })
 

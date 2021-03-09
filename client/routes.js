@@ -13,12 +13,30 @@ import {SignUp, LogIn} from './components'
 import SingleUser from './components/SingleUser'
 import OrderHistory from './components/OrderHistory'
 
+import {getCart} from './store/cart'
+
 /**
  * COMPONENT
  */
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData()
+    console.log('USER?', this.props.user)
+    if (this.props.user.id) {
+      console.log('THRE IS A USER ID', this.props.user.id)
+    } else {
+      console.log('NO USER ID', this.props.user)
+    }
+    this.props.loadCart(this.props.user.id ? this.props.user.id : '1') // TODO: Remove userId
+  }
+
+  componentDidUpdate(prevProps) {
+    const user = this.props.user
+    console.log('IN THE UPDATE', user)
+    if (!prevProps.user.id && user.id) {
+      console.log('IN THE UPDATE', this.props.user)
+      this.props.loadCart(this.props.user.id ? this.props.user.id : '1') // TODO: Remove userId
+    }
   }
 
   render() {
@@ -55,7 +73,8 @@ const mapState = state => {
   return {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    user: state.user
   }
 }
 
@@ -63,6 +82,9 @@ const mapDispatch = dispatch => {
   return {
     loadInitialData() {
       dispatch(me())
+    },
+    loadCart(userId) {
+      dispatch(getCart(userId))
     }
   }
 }

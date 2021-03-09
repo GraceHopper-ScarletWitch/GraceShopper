@@ -13,7 +13,8 @@ export class SingleProduct extends React.Component {
     await this.props.getProduct(this.props.match.params.id)
     const cartId = this.props.cart.id
     if (!cartId) {
-      this.props.getCart(1)
+      // guest cart?
+      this.props.getCart(1) // TODO: Don't need this call anymore
     }
   }
 
