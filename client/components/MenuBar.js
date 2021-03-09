@@ -84,6 +84,13 @@ export const MenuBar = ({isLoggedIn, doLogout, isAdmin}) => {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
+                <MenuItem
+                  to="/myaccount"
+                  component={Link}
+                  onClick={handleClose}
+                >
+                  My Account
+                </MenuItem>
                 {isAdmin ? (
                   <MenuItem
                     to="/admin/users"
