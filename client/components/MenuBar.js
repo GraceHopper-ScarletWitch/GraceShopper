@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-export const NavBar = ({isLoggedIn, doLogout, isAdmin}) => {
+export const MenuBar = ({isLoggedIn, doLogout, isAdmin}) => {
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = React.useState(null)
 
@@ -149,4 +149,4 @@ const mapDispatch = dispatch => ({
   doLogout: () => dispatch(logout())
 })
 
-export default connect(mapState, mapDispatch)(NavBar)
+export default connect(mapState, mapDispatch)(MenuBar)
