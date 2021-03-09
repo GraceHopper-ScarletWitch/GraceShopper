@@ -26,7 +26,7 @@ class Routes extends Component {
     } else {
       console.log('NO USER ID', this.props.user)
     }
-    this.props.loadCart(this.props.user.id ? this.props.user.id : '1')
+    this.props.loadCart(this.props.user.id ? this.props.user.id : '1') // TODO: Remove userId
   }
 
   componentDidUpdate(prevProps) {
@@ -34,7 +34,7 @@ class Routes extends Component {
     console.log('IN THE UPDATE', user)
     if (!prevProps.user.id && user.id) {
       console.log('IN THE UPDATE', this.props.user)
-      this.props.loadCart(this.props.user.id ? this.props.user.id : '1')
+      this.props.loadCart(this.props.user.id ? this.props.user.id : '1') // TODO: Remove userId
     }
   }
 
