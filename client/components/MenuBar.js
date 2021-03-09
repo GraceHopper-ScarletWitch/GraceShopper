@@ -84,15 +84,15 @@ export const MenuBar = ({isLoggedIn, doLogout, isAdmin}) => {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                {/* {isAdmin ? ( */}
-                {/* <MenuItem
-                  to="/admin/users"
-                  component={Link}
-                  sonClick={handleClose}
-                >
-                  View Users
-                </MenuItem> */}
-                {/* // ) : null} */}
+                {isAdmin ? (
+                  <MenuItem
+                    to="/admin/users"
+                    component={Link}
+                    onClick={handleClose}
+                  >
+                    View Users
+                  </MenuItem>
+                ) : null}
                 <MenuItem
                   to="/orderhistory"
                   component={Link}
