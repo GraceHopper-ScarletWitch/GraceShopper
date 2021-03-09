@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
-const {CartProducts, Product} = require('../models')
+const {CartProducts} = require('../models')
 
 const Cart = db.define('cart', {
   subTotal: {
@@ -15,18 +15,6 @@ const Cart = db.define('cart', {
     defaultValue: false
   }
 })
-// Cart.afterBulkCreate(async (cart) => {
-//   console.log('afterBulkCreateProduct', cart)
-//   const add = await cart.addProduct(3)
-//   const items = await cart.getProducts()
-//   console.log('items', items)
-//   console.log('add', add)
-//console.log('in the beforeBulkCreate', cart)
-// for (const cart of carts) {
-//   if (cart.subTotal) {
-//     cart.subTotal += //procuct.price
-//   }
-// }
 
 // //  updateOnDuplicate otherwise it won't be persisted
 // if (
@@ -37,21 +25,21 @@ const Cart = db.define('cart', {
 // }
 //})
 
-Cart.beforeBulkCreate((carts, options) => {
-  for (const cart of carts) {
-    if (cart.subTotal) {
-      cart.subTotal += cart.subTotal
-    }
-  }
+// Cart.beforeBulkCreate((carts, options) => {
+//   for (const cart of carts) {
+//     if (cart.subTotal) {
+//       cart.subTotal += cart.subTotal
+//     }
+//   }
 
-  // Add `memberSince` to updateOnDuplicate otherwise it won't be persisted
-  if (
-    options.updateOnDuplicate &&
-    !options.updateOnDuplicate.includes('subTotal')
-  ) {
-    options.updateOnDuplicate.push('subTotal')
-  }
-})
+//   // Add `memberSince` to updateOnDuplicate otherwise it won't be persisted
+//   if (
+//     options.updateOnDuplicate &&
+//     !options.updateOnDuplicate.includes('subTotal')
+//   ) {
+//     options.updateOnDuplicate.push('subTotal')
+//   }
+// })
 
 Cart.prototype.removeProductFromCart = async function(itemToRemove) {
   //if item is found and quantity is >1 proceed to remove item
@@ -76,44 +64,19 @@ Cart.beforeSave(async cart => {
   return cart
 })
 
-// second hook
-// beforeBulkCreate ??
-
 // optimize route to incorporate findOrCreate ??
 // use findOrCreate instead of magic methods
-Cart.prototype.addProductToCart = async function(id, currentCart) {
-  //checking to see if product exist in cart
-  if (currentCart.hasProduct(id)) {
-    const foundIt = await CartProducts.findAll()
-    // console.log('productId', foundIt)
-  }
-  //   //await currentCart.addProduct(id)
-  //   await currentCart.products.forEach((product) => {
-  //     if (product.id === id) {
-  //       console.log(
-  //         'product.cartproducts.quantity',
-  //         product.cartProducts.quantity
-  //       )
-  //       product.cartProducts.quantity += 1
-  //     }
-  //     console.log(
-  //       'product.cartproducts.quantity',
-  //       product.cartProducts.quantity
-  //     )
-  //   })
-  //   await currentCart.save()
 
-  // const productInCart = await currentCart.cartProducts.findOne({
-  //   where: {
-  //     cartId: currentCart.id,
-  //     productId: id,
-  //   },
-  // })
-  // // we want to update or add product
-  // productInCart.quantity += 1
-  //await productInCart.save()
-  //}
-  await currentCart.addProduct(id)
+Cart.prototype.addProductToCart = async function(productInCart) {
+  //PRODUCT COMES IN AS A ARRAY
+  console.log('product', typeof productInCart)
+  console.log('before', productInCart[0].quantity)
+  if (productInCart[1] === false) {
+    productInCart[0].quantity += 1
+    console.log(productInCart[0].quantity)
+  }
+  console.log('after', productInCart[0].quantity)
+  await productInCart[0].save()
 }
 Cart.prototype.containsProduct = async function(productId) {
   let answer = false
@@ -125,7 +88,5 @@ Cart.prototype.containsProduct = async function(productId) {
   })
   return answer
 }
-
-// instance methods (adding and removing)
 
 module.exports = Cart
