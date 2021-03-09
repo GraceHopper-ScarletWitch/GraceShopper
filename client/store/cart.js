@@ -42,14 +42,12 @@ export const checkoutCart = () => {
 
 // We will need to find a way to get the cartId. We will probably want to look it up by user and find the user's active cart? Maybe have a variable on state somewhere to point to the active cart id?
 
-// TODO: remove userId, route doesn't need it
 // THUNKS
-export const getCart = userId => {
-  console.log('IN THE GET CART THUNK', userId)
+export const getCart = () => {
   return async dispatch => {
     try {
       console.log('IN THE TRY')
-      const {data: cart} = await axios.get(`/api/cart/${userId}`)
+      const {data: cart} = await axios.get(`/api/cart/`)
       console.log('AFTER AXIOS', cart)
       dispatch(gotCart(cart))
     } catch (error) {

@@ -13,10 +13,10 @@ export class AllProducts extends React.Component {
   componentDidMount() {
     this.props.getAllProducts()
     if (this.props.isLoggedIn) {
-      this.props.getCart(this.props.user.id) // TODO: Remove userId
+      this.props.getCart()
     } else {
       console.log('NOT LOGGED IN')
-      this.props.getCart(this.props.user.id) // TODO: Remove userId
+      this.props.getCart()
     }
   }
 

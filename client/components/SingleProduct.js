@@ -11,11 +11,6 @@ export class SingleProduct extends React.Component {
 
   async componentDidMount() {
     await this.props.getProduct(this.props.match.params.id)
-    const cartId = this.props.cart.id
-    if (!cartId) {
-      // guest cart?
-      this.props.getCart(1) // TODO: Don't need this call anymore
-    }
   }
 
   addItemToCart(productId) {
