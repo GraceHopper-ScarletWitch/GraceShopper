@@ -6,75 +6,57 @@ import TextField from '@material-ui/core/TextField'
 // import Checkbox from '@material-ui/core/Checkbox'
 import Button from '@material-ui/core/Button'
 import Paper from '@material-ui/core/Paper'
-import {makeStyles} from '@material-ui/core/styles/makeStyles'
-
+import {makeStyles} from '@material-ui/core/styles'
 import {connect} from 'react-redux'
 import {sendUserInfo} from '../store/user'
 
-export class Checkout extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      name: '',
-      address: '',
-      phone: '',
-      email: '',
-      cardName: '',
-      cardNumber: '',
-      cardExpiry: '',
-      cardCVV: ''
-    }
-    this.handleChange = this.handleChange.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
+export const Checkout = ({user, isLoggedIn, sendUserInfo}) => {
+  const handleChange = evt => {
+    user[evt.target.name] = evt.target.value
+    console.log('its handled', user)
   }
-
-  handleChange(evt) {
-    this.setState({
-      [evt.target.name]: evt.target.value
-    })
-  }
-
-  handleSubmit(evt) {
+  const handleSubmit = evt => {
     evt.preventDefault()
-    this.props.isLoggedIn
-      ? this.props.sendUserInfo(this.state)
-      : console.log('order submitted!')
+    console.log(user)
+    sendUserInfo(user)
+    console.log('order submitted!')
   }
 
-  render() {
-    // eslint-disable-next-line no-use-before-define
-    const classes = useStyles()
+  // eslint-disable-next-line no-use-before-define
+  const classes = useStyles()
+  return (
+    <>
+      <main className={classes.layout}>
+        <Paper className={classes.paper}>
+          <Typography component="h1" variant="h4" align="center">
+            Checkout
+          </Typography>
 
-    return (
-      <>
-        <main className={classes.layout}>
-          <Paper className={classes.paper}>
-            <Typography component="h1" variant="h4" align="center">
-              Checkout
-            </Typography>
-
+          <form name="checkout" onSubmit={handleSubmit}>
             {/* SHIPPING INFO */}
+
             <Typography variant="h6" gutterBottom>
               Shipping address
             </Typography>
             <Grid container spacing={3}>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12}>
                 <TextField
                   required
                   id="name"
                   name="name"
                   label="Full name"
                   fullWidth
+                  onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
-                  id="address1"
-                  name="address1"
-                  label="Address line 1"
+                  id="delivery"
+                  name="delivery"
+                  label="Delivery Address"
                   fullWidth
-                  autoComplete="shipping address-line1"
+                  onChange={handleChange}
                 />
               </Grid>
 
@@ -130,11 +112,19 @@ export class Checkout extends React.Component {
                 />
               </Grid> */}
             </Grid>
-          </Paper>
-        </main>
-      </>
-    )
-  }
+            <Button
+              onClick={handleSubmit}
+              className={classes.button}
+              color="primary"
+              variant="contained"
+            >
+              Submit
+            </Button>
+          </form>
+        </Paper>
+      </main>
+    </>
+  )
 }
 
 const mapState = state => ({
@@ -148,7 +138,6 @@ const mapDispatch = dispatch => ({
 
 export default connect(mapState, mapDispatch)(Checkout)
 
-//STYLES
 const useStyles = makeStyles(theme => ({
   appBar: {
     position: 'relative'

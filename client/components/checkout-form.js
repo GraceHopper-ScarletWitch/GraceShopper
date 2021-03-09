@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {sendUserInfo} from '../store/user'
+import PaymentForm from './PaymentInfo'
 
 export class Checkout extends React.Component {
   constructor(props) {
@@ -82,6 +83,8 @@ export class Checkout extends React.Component {
               </label>
             ) : null}
             <button type="submit">Submit</button>
+
+            <PaymentForm />
           </div>
         </form>
       </div>
