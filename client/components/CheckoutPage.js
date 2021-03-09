@@ -9,7 +9,6 @@ import Paper from '@material-ui/core/Paper'
 import {makeStyles} from '@material-ui/core/styles'
 import {connect} from 'react-redux'
 import {sendUserInfo} from '../store/user'
-import {OrderSubmitted} from './OrderSubmitted'
 
 // eslint-disable-next-line no-shadow
 export const Checkout = ({user, isLoggedIn, sendUserInfo}) => {
