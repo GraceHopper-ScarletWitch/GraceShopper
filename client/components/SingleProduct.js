@@ -40,7 +40,7 @@ export class SingleProduct extends React.Component {
             <div>Color: {product.color} </div>
             <div>Cut: {product.cut}</div>
             <div>Price: {product.price / 100}</div>
-            <div>Quantity: {product.quantity}</div>
+            <div>Inventory: {product.inventory}</div>
           </div>
         </div>
         <button type="button" onClick={() => this.addItemToCart(product.id)}>
