@@ -1,7 +1,7 @@
 import React from 'react'
 import {getProduct} from '../store/singleProduct'
 import {connect} from 'react-redux'
-import {getCart, getCartWithItemAdded} from '../store/cart'
+import {getCartWithItemAdded} from '../store/cart'
 
 export class SingleProduct extends React.Component {
   constructor() {
@@ -55,8 +55,7 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
   getProduct: id => dispatch(getProduct(id)),
   getCartWithItemAdded: (cartId, productId) =>
-    dispatch(getCartWithItemAdded(cartId, productId)),
-  getCart: cartId => dispatch(getCart(cartId))
+    dispatch(getCartWithItemAdded(cartId, productId))
 })
 
 export default connect(mapState, mapDispatch)(SingleProduct)

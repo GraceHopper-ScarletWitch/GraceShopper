@@ -82,8 +82,8 @@ const mapDispatch = dispatch => {
     loadInitialData() {
       dispatch(me())
     },
-    loadCart(userId) {
-      dispatch(getCart(userId))
+    loadCart() {
+      dispatch(getCart())
     }
   }
 }

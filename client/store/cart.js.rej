@@ -1,0 +1,4 @@
+diff a/client/store/cart.js b/client/store/cart.js	(rejected hunks)
+@@ -105 +105 @@ export const getCheckedoutCart = () => {
+-  return async (dispatch) => {
++  return async dispatch => {
