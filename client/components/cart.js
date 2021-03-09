@@ -9,6 +9,14 @@ import {Link} from 'react-router-dom'
 
 // get userId from state through mapStateToProps and update thunk to incorporate userId
 export class Cart extends React.Component {
+  // componentDidUpdate(prevProps) {
+  //   const cart = this.props.cart
+  //   if (!prevProps.cart.id && cart.id) {
+  //     console.log('THIS PROPS USER', this.props.user.id)
+  //     this.props.getCart(this.props.user.id)
+  //   }
+  // }
+
   addAnotherToCart(cartId, productId) {
     this.props.getCartWithItemAdded(cartId, productId)
   }

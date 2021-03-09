@@ -12,13 +12,10 @@ export class AllProducts extends React.Component {
   //need component did mount
   componentDidMount() {
     this.props.getAllProducts()
-    if (!this.props.isLoggedIn) {
-      console.log('NOT LOGGED IN')
-      if (!this.props.cart.id) {
-        this.props.getGuestCart()
-      }
+    if (this.props.isLoggedIn) {
+      this.props.getCart(this.props.user.id)
     } else {
-      console.log('LOGGED IN')
+      console.log('NOT LOGGED IN')
       this.props.getCart(this.props.user.id)
     }
   }
