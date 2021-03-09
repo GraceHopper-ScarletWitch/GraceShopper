@@ -2,7 +2,7 @@ import React from 'react'
 
 import NavBar from './components/NavBar'
 import Routes from './routes'
-import CssBaseline from '@material-ui/core'
+import CssBaseline from '@material-ui/core/CssBaseline'
 
 const App = () => {
   return (

@@ -96,12 +96,20 @@ export const NavBar = ({isLoggedIn, doLogout}) => {
               </Menu>
             </div>
           ) : (
-            // login button
-            <Link to="/login">
-              <Button color="primary" variant="contained" disableElevation>
-                Login
-              </Button>
-            </Link>
+            <div>
+              {/* // login button */}
+              <Link to="/signup">
+                <Button color="primary" variant="contained" disableElevation>
+                  Sign Up
+                </Button>
+              </Link>
+
+              <Link to="/login">
+                <Button color="primary" variant="contained" disableElevation>
+                  Login
+                </Button>
+              </Link>
+            </div>
           )}
 
           <div>

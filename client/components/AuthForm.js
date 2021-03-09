@@ -89,7 +89,8 @@ const AuthForm = props => {
           >
             {displayName}
           </Button>
-
+          <a href="/auth/google">{displayName} with Google </a>
+          <br />
           {displayName === 'Sign Up' ? (
             <Grid container justify="center">
               <Grid item>
@@ -98,9 +99,12 @@ const AuthForm = props => {
                 </Link>
               </Grid>
             </Grid>
-          ) : null}
+          ) : (
+            <Link href="/signup" variant="body2">
+              Don't have an account? Sign Up{' '}
+            </Link>
+          )}
         </form>
-        <a href="/auth/google">{displayName} with Google</a>
       </div>
       <Box mt={5} />
     </Container>
