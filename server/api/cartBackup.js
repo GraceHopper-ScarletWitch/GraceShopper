@@ -1,16 +1,34 @@
 const router = require('express').Router()
-const {Cart, CartProducts, Product} = require('../db/models')
+const {Cart, CartProducts, Product, User} = require('../db/models')
 module.exports = router
 
 // GET /api/cart/:id  update use userId <-- rewrite route to search for cart based off of userId
-router.get('/:id', async (req, res, next) => {
-  console.log('IN THE GET ROUTE', req.params.id)
+router.get('/:userId', async (req, res, next) => {
   try {
-    const currentCart = await Cart.findByPk(req.params.id, {
-      include: Product
-    })
+    if (req.params.userId !== '1') {
+      console.log('NOT 1')
+      const [userCart] = await Cart.findAll({
+        where: {
+          userId: req.params.userId,
+          active: true
+        }
+      })
+      res.send(userCart)
+    } else if (req.params.userId === '1' && !req.session.cart) {
+      console.log('IN THE ELSE IF')
+      const newGuestCart = await Cart.create(req.params)
+      req.session.cart = newGuestCart
+      res.send(newGuestCart)
+    } else {
+      console.log('IN THE ELSE')
+      const guestCart = await Cart.findByPk(req.session.cart.id, {
+        include: Product
+      })
+      req.session.cart = guestCart
+      res.send(guestCart)
+    }
+
     // await currentCart.save()
-    res.send(currentCart)
   } catch (err) {
     next(err)
   }
@@ -24,6 +42,11 @@ router.post('/', async (req, res, next) => {
   try {
     const newCart = await Cart.create(req.body) //userId
     console.log(newCart)
+    if (req.body.userId === '1') {
+      req.session.cart = newCart
+    } else {
+      newCart.active = true
+    }
     res.send(newCart)
   } catch (error) {
     console.log('Error in the POST /api/cart route', error)
@@ -68,6 +91,9 @@ router.put('/checkout/:cartId', async (req, res, next) => {
   try {
     const currentCart = await Cart.findByPk(req.params.cartId)
     currentCart.active = false
+    if (req.session.cart.id === Number(req.params.cartId)) {
+      req.session.cart = null
+    }
     await currentCart.save()
     res.send(currentCart)
   } catch (error) {

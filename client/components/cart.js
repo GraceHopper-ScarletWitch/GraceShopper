@@ -9,15 +9,6 @@ import {Link} from 'react-router-dom'
 
 // get userId from state through mapStateToProps and update thunk to incorporate userId
 export class Cart extends React.Component {
-  constructor() {
-    super()
-    this.addAnotherToCart = this.addAnotherToCart.bind(this)
-    this.removeOneFromCart = this.removeOneFromCart.bind(this)
-  }
-  componentDidMount() {
-    // hardcoding cartId for now until updated with userId from props/ route
-    this.props.getCart(1)
-  }
   addAnotherToCart(cartId, productId) {
     this.props.getCartWithItemAdded(cartId, productId)
   }
@@ -26,6 +17,7 @@ export class Cart extends React.Component {
   }
 
   render() {
+    console.log('PROPS IN THE CART', this.props)
     const products = this.props.cart.products
     const cart = this.props.cart
     return (
@@ -82,17 +74,24 @@ export class Cart extends React.Component {
             : 'Oh no! Your cart is empty. Time to go shopping!!'
           : 'Oh no! Your cart is empty. Time to go shopping!'}
         <h3>Subtotal: ${this.props.cart.subTotal}</h3>
-        <h3>Make them Mine!</h3>
-        <button type="button" className="cart-checkout-button">
-          <Link to="/checkout">Check Me Out!</Link>
-        </button>
+        {this.props.cart.subTotal > 0 ? (
+          <div>
+            <h3>Make Them Mine!</h3>
+            <button type="button" className="cart-checkout-button">
+              <Link to="/checkout">Check Me Out!</Link>
+            </button>
+          </div>
+        ) : (
+          ''
+        )}
       </div>
     )
   }
 }
 
 const mapStateToProps = state => ({
-  cart: state.cart
+  cart: state.cart,
+  user: state.user
 })
 
 // Update this to userId once route has been updated!

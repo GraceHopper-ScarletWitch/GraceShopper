@@ -10,12 +10,15 @@ import Cart from './components/cart'
 import {SignUp, LogIn} from './components'
 import OrderHistory from './components/OrderHistory'
 
+import {getCart} from './store/cart'
+
 /**
  * COMPONENT
  */
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData()
+    // this.props.loadCart(this.props.user ? this.props.user.id : 1)
   }
 
   render() {
@@ -58,6 +61,9 @@ const mapDispatch = dispatch => {
   return {
     loadInitialData() {
       dispatch(me())
+    },
+    loadCart(userId) {
+      dispatch(getCart(userId))
     }
   }
 }

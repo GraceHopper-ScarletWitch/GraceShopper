@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 //fetch thunk
 import {getAllProducts} from '../store/allProducts'
+import {getGuestCart, getCart} from '../store/cart'
 //not sure if we will need a link here
 import {Link} from 'react-router-dom'
 
@@ -11,6 +12,15 @@ export class AllProducts extends React.Component {
   //need component did mount
   componentDidMount() {
     this.props.getAllProducts()
+    if (!this.props.isLoggedIn) {
+      console.log('NOT LOGGED IN')
+      if (!this.props.cart.id) {
+        this.props.getGuestCart()
+      }
+    } else {
+      console.log('LOGGED IN')
+      this.props.getCart(this.props.user.id)
+    }
   }
 
   render() {
@@ -52,13 +62,18 @@ export class AllProducts extends React.Component {
 const mapState = state => {
   //console.log('maptostate', state)
   return {
-    products: state.allProducts
+    cart: state.cart,
+    user: state.user,
+    products: state.allProducts,
+    isLoggedIn: !!state.user.id
   }
 }
 
 const mapDispatch = dispatch => {
   return {
-    getAllProducts: () => dispatch(getAllProducts())
+    getAllProducts: () => dispatch(getAllProducts()),
+    getCart: userId => dispatch(getCart(userId)),
+    getGuestCart: () => dispatch(getGuestCart())
   }
 }
 //will need to add connection to store

@@ -2,6 +2,8 @@ import axios from 'axios'
 
 // ACTION TYPES
 const GOT_CART = 'GOT_CART'
+const GOT_GUEST_CART = 'GOT_GUEST_CART'
+const CHECKOUT_CART = 'CHECKOUT_CART'
 // const GOT_ITEM_TO_ADD = 'GOT_ITEM_TO_ADD'
 // const GOT_ITEM_TO_REMOVE = 'GOT_ITEM_TO_REMOVE'
 
@@ -10,6 +12,19 @@ export const gotCart = cart => {
   return {
     type: GOT_CART,
     cart
+  }
+}
+
+export const gotGuestCart = cart => {
+  return {
+    type: GOT_GUEST_CART,
+    cart
+  }
+}
+
+export const checkoutCart = () => {
+  return {
+    type: CHECKOUT_CART
   }
 }
 
@@ -68,6 +83,30 @@ export const getCartWithItemRemoved = (cartId, productId) => {
   }
 }
 
+export const getGuestCart = () => {
+  return async dispatch => {
+    try {
+      const {data: cart} = await axios.post(`api/cart/`)
+      console.log('CART AFTER CALL', cart)
+      dispatch(gotCart(cart))
+    } catch (error) {
+      console.log('Error in the getGuestCart thunk', error)
+    }
+  }
+}
+
+export const getCheckedoutCart = () => {
+  console.log('CHECKOUT THUNK CALLED')
+  return async dispatch => {
+    try {
+      // ADD CODE TO GO TO ROUTE WHICH NEEDS TO BE UPDATED!!!
+      dispatch(checkoutCart())
+    } catch (error) {
+      console.log('Error in the getCheckedoutCart thunk', error)
+    }
+  }
+}
+
 // INITIAL STATE
 const intialState = {}
 
@@ -83,6 +122,9 @@ function cartReducer(state = intialState, action) {
   switch (action.type) {
     case GOT_CART:
       return action.cart
+    case CHECKOUT_CART:
+      console.log('CHECKED OUT')
+      return {}
     default:
       return state
   }
