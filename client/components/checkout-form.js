@@ -12,23 +12,8 @@ export class Checkout extends React.Component {
       phone: '',
       email: ''
     }
-    this.addName = this.addName.bind(this)
-    this.addAddress = this.addAddress.bind(this)
-    this.addPhone = this.addPhone.bind(this)
-    this.addEmail = this.addEmail.bind(this)
+    this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
-  }
-  addName(evt) {
-    this.setState({name: evt.target.value})
-  }
-  addAddress(evt) {
-    this.setState({address: evt.target.value})
-  }
-  addPhone(evt) {
-    this.setState({phone: evt.target.value})
-  }
-  addEmail(evt) {
-    this.setState({email: evt.target.value})
   }
 
   handleChange(evt) {
@@ -62,7 +47,7 @@ export class Checkout extends React.Component {
                 name="name"
                 type="text"
                 required={true}
-                onChange={this.addName}
+                onChange={this.handleChange}
                 placeholder="Full Name"
               />
             </label>
@@ -70,7 +55,7 @@ export class Checkout extends React.Component {
               <input
                 name="address"
                 type="text"
-                onChange={this.addAddress}
+                onChange={this.handleChange}
                 required={true}
                 placeholder="Shipping Address"
               />
@@ -79,7 +64,7 @@ export class Checkout extends React.Component {
               <input
                 name="phone"
                 type="text"
-                onChange={this.addPhone}
+                onChange={this.handleChange}
                 required={true}
                 placeholder="Phone Number"
               />
@@ -90,7 +75,7 @@ export class Checkout extends React.Component {
                 <input
                   name="email"
                   type="text"
-                  onChange={this.addEmail}
+                  onChange={this.handleChange}
                   required={true}
                   placeholder="Email"
                 />
