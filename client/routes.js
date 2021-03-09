@@ -12,7 +12,6 @@ import AllUsers from './components/AllUsers'
 import {SignUp, LogIn} from './components'
 import SingleUser from './components/SingleUser'
 import OrderHistory from './components/OrderHistory'
-
 import {getCart} from './store/cart'
 
 /**
@@ -50,12 +49,13 @@ class Routes extends Component {
         <Route path="/checkout" component={Checkout} />
         <Route path="/cart" component={Cart} />
         <Route path="/orderhistory" component={OrderHistory} />
+        <Route path="/home" component={AllProducts} />
+        <Route exact path="/" component={AllProducts} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
             <Route exact path="/admin/users" component={AllUsers} />
             <Route exact path="/admin/users/:id" component={SingleUser} />
-            <Route path="/home" component={AllProducts} />
           </Switch>
         )}
         {/* Displays our AllProducts component as a fallback */}
