@@ -4,5 +4,5 @@
  * having to figure out which file they belong to!
  */
 
-// export {LogIn, SignUp} from './AuthForm'
+export {LogIn, SignUp} from './AuthForm'
 // export {Checkout} from './checkout-form'
