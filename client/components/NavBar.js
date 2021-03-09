@@ -97,7 +97,7 @@ export const NavBar = ({isLoggedIn, doLogout}) => {
             </div>
           ) : (
             <div>
-              {/* // login button */}
+              {/* login button */}
               <Link to="/signup">
                 <Button color="primary" variant="contained" disableElevation>
                   Sign Up
