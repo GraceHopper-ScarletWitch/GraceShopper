@@ -2,16 +2,16 @@ import React, {useState} from 'react'
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
 import TextField from '@material-ui/core/TextField'
-// import FormControlLabel from '@material-ui/core/FormControlLabel'
-// import Checkbox from '@material-ui/core/Checkbox'
 import Button from '@material-ui/core/Button'
 import Paper from '@material-ui/core/Paper'
 import {makeStyles} from '@material-ui/core/styles'
 import {connect} from 'react-redux'
 import {sendUserInfo} from '../store/user'
+import {getCheckedoutCart} from '../store/cart'
+import {Link} from 'react-router-dom'
 
 // eslint-disable-next-line no-shadow
-export const Checkout = ({user, isLoggedIn, sendUserInfo}) => {
+export const Checkout = ({user, isLoggedIn, sendUserInfo, checkout}) => {
   const [orderSubmitted, setOrderSubmitted] = useState(false)
   const handleChange = evt => {
     user[evt.target.name] = evt.target.value
@@ -21,6 +21,7 @@ export const Checkout = ({user, isLoggedIn, sendUserInfo}) => {
     evt.preventDefault()
     isLoggedIn ? sendUserInfo(user) : console.log('order submitted!')
     setOrderSubmitted(true)
+    checkout()
   }
 
   // eslint-disable-next-line no-use-before-define
@@ -28,13 +29,17 @@ export const Checkout = ({user, isLoggedIn, sendUserInfo}) => {
   return (
     <>
       <main className={classes.layout}>
+        {!isLoggedIn ? (
+          <p>
+            <i>have an account?</i> <Link to="/login">Login</Link>
+          </p>
+        ) : null}
         <Paper className={classes.paper}>
           <Typography component="h1" variant="h4" align="center">
             Checkout
           </Typography>
           <br />
           <br />
-          {/* SHIPPING INFO */}
 
           <Typography variant="h6" gutterBottom>
             Shipping address
@@ -201,6 +206,7 @@ const mapState = state => ({
 })
 
 const mapDispatch = dispatch => ({
+  checkout: () => dispatch(getCheckedoutCart()),
   sendUserInfo: info => dispatch(sendUserInfo(info))
 })
 
