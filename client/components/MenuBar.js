@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-export const NavBar = ({isLoggedIn, doLogout}) => {
+export const NavBar = ({isLoggedIn, doLogout, isAdmin}) => {
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = React.useState(null)
 
@@ -84,7 +84,15 @@ export const NavBar = ({isLoggedIn, doLogout}) => {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>My Account</MenuItem>
+                {/* {isAdmin ? ( */}
+                {/* <MenuItem
+                  to="/admin/users"
+                  component={Link}
+                  sonClick={handleClose}
+                >
+                  View Users
+                </MenuItem> */}
+                {/* // ) : null} */}
                 <MenuItem
                   to="/orderhistory"
                   component={Link}
@@ -133,7 +141,8 @@ export const NavBar = ({isLoggedIn, doLogout}) => {
 }
 
 const mapState = state => ({
-  isLoggedIn: !!state.user.id
+  isLoggedIn: !!state.user.id,
+  isAdmin: state.user.userStatus === 'admin'
 })
 
 const mapDispatch = dispatch => ({
