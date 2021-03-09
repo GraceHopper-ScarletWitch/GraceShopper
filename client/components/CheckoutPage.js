@@ -10,33 +10,37 @@ import {makeStyles} from '@material-ui/core/styles'
 import {connect} from 'react-redux'
 import {sendUserInfo} from '../store/user'
 
+// eslint-disable-next-line no-shadow
 export const Checkout = ({user, isLoggedIn, sendUserInfo}) => {
   const handleChange = evt => {
     user[evt.target.name] = evt.target.value
-    console.log('its handled', user)
   }
+  let orderSubmitted = false
   const handleSubmit = evt => {
     evt.preventDefault()
-    console.log(user)
-    sendUserInfo(user)
-    console.log('order submitted!')
+
+    isLoggedIn ? sendUserInfo(user) : console.log('order submitted!')
+    orderSubmitted = true
   }
 
   // eslint-disable-next-line no-use-before-define
   const classes = useStyles()
   return (
     <>
+      {console.log(orderSubmitted)}
       <main className={classes.layout}>
         <Paper className={classes.paper}>
           <Typography component="h1" variant="h4" align="center">
             Checkout
           </Typography>
-
+          <br />
+          <br />
           {/* SHIPPING INFO */}
 
           <Typography variant="h6" gutterBottom>
             Shipping address
           </Typography>
+
           <Grid container spacing={3}>
             <Grid item xs={12}>
               <TextField
@@ -111,7 +115,8 @@ export const Checkout = ({user, isLoggedIn, sendUserInfo}) => {
                 />
               </Grid> */}
           </Grid>
-
+          <br />
+          <br />
           <Typography variant="h6" gutterBottom>
             Payment method
           </Typography>
@@ -171,6 +176,19 @@ export const Checkout = ({user, isLoggedIn, sendUserInfo}) => {
           >
             Submit
           </Button>
+
+          {orderSubmitted ? (
+            <React.Fragment>
+              <Typography variant="h5" gutterBottom>
+                Thank you for your order.
+              </Typography>
+              <Typography variant="subtitle1">
+                Your order number is #2001539. We have emailed your order
+                confirmation, and will send you an update when your order has
+                shipped.
+              </Typography>
+            </React.Fragment>
+          ) : null}
         </Paper>
       </main>
     </>
