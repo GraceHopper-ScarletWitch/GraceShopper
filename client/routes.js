@@ -8,6 +8,7 @@ import AllProducts from './components/AllProducts'
 import Checkout from './components/checkout-form'
 import Cart from './components/cart'
 import {SignUp, LogIn} from './components'
+import OrderHistory from './components/OrderHistory'
 
 /**
  * COMPONENT
@@ -28,6 +29,7 @@ class Routes extends Component {
         <Route path="/signup" component={SignUp} />
         <Route path="/checkout" component={Checkout} />
         <Route path="/cart" component={Cart} />
+        <Route path="/orderhistory" component={OrderHistory} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
@@ -71,5 +73,3 @@ Routes.propTypes = {
   loadInitialData: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired
 }
-
-//userInfo={this.props}
