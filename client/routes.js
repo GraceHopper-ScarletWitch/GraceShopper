@@ -7,7 +7,9 @@ import SingleProduct from './components/SingleProduct'
 import AllProducts from './components/AllProducts'
 import Checkout from './components/checkout-form'
 import Cart from './components/cart'
+import AllUsers from './components/AllUsers'
 import {SignUp, LogIn} from './components'
+import SingleUser from './components/SingleUser'
 import OrderHistory from './components/OrderHistory'
 
 import {getCart} from './store/cart'
@@ -36,6 +38,8 @@ class Routes extends Component {
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
+            <Route exact path="/admin/users" component={AllUsers} />
+            <Route exact path="/admin/users/:id" component={SingleUser} />
             <Route path="/home" component={AllProducts} />
           </Switch>
         )}
