@@ -31,6 +31,12 @@ export class Checkout extends React.Component {
     this.setState({email: evt.target.value})
   }
 
+  handleChange(evt) {
+    this.setState({
+      [evt.target.name]: evt.target.value
+    })
+  }
+
   handleSubmit(evt) {
     evt.preventDefault()
     this.props.isLoggedIn
@@ -82,7 +88,7 @@ export class Checkout extends React.Component {
             {!isLoggedIn ? (
               <label htmlFor="email">
                 <input
-                  name="phone"
+                  name="email"
                   type="text"
                   onChange={this.addEmail}
                   required={true}
