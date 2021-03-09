@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
 import TextField from '@material-ui/core/TextField'
@@ -9,25 +9,25 @@ import Paper from '@material-ui/core/Paper'
 import {makeStyles} from '@material-ui/core/styles'
 import {connect} from 'react-redux'
 import {sendUserInfo} from '../store/user'
+import {OrderSubmitted} from './OrderSubmitted'
 
 // eslint-disable-next-line no-shadow
 export const Checkout = ({user, isLoggedIn, sendUserInfo}) => {
+  const [orderSubmitted, setOrderSubmitted] = useState(false)
   const handleChange = evt => {
     user[evt.target.name] = evt.target.value
   }
-  let orderSubmitted = false
+
   const handleSubmit = evt => {
     evt.preventDefault()
-
     isLoggedIn ? sendUserInfo(user) : console.log('order submitted!')
-    orderSubmitted = true
+    setOrderSubmitted(true)
   }
 
   // eslint-disable-next-line no-use-before-define
   const classes = useStyles()
   return (
     <>
-      {console.log(orderSubmitted)}
       <main className={classes.layout}>
         <Paper className={classes.paper}>
           <Typography component="h1" variant="h4" align="center">
@@ -176,9 +176,10 @@ export const Checkout = ({user, isLoggedIn, sendUserInfo}) => {
           >
             Submit
           </Button>
-
+          <br />
+          <br />
           {orderSubmitted ? (
-            <React.Fragment>
+            <>
               <Typography variant="h5" gutterBottom>
                 Thank you for your order.
               </Typography>
@@ -187,7 +188,7 @@ export const Checkout = ({user, isLoggedIn, sendUserInfo}) => {
                 confirmation, and will send you an update when your order has
                 shipped.
               </Typography>
-            </React.Fragment>
+            </>
           ) : null}
         </Paper>
       </main>
