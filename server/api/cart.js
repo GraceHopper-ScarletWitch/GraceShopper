@@ -52,6 +52,7 @@ router.put('/:cartId', async (req, res, next) => {
     })
     //Number() can be used to convert JavaScript variables to numbers
     const productId = req.body.productId
+
     if (await currentCart.containsProduct(Number(req.body.productId))) {
       const productInCart = await CartProducts.findOne({
         where: {

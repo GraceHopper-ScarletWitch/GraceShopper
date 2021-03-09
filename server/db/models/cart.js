@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
-const {CartProducts} = require('./cartProducts')
+const {CartProducts, Product} = require('../models')
 
 const Cart = db.define('cart', {
   subTotal: {
@@ -53,10 +53,6 @@ Cart.beforeBulkCreate((carts, options) => {
   }
 })
 
-Cart.prototype.addProductToCart = async function(productId, currentCart) {
-  await currentCart.addProduct(productId)
-}
-
 Cart.prototype.removeProductFromCart = async function(itemToRemove) {
   //if item is found and quantity is >1 proceed to remove item
   if (itemToRemove.quantity > 1) {
@@ -85,6 +81,40 @@ Cart.beforeSave(async cart => {
 
 // optimize route to incorporate findOrCreate ??
 // use findOrCreate instead of magic methods
+Cart.prototype.addProductToCart = async function(id, currentCart) {
+  //checking to see if product exist in cart
+  if (currentCart.hasProduct(id)) {
+    const foundIt = await CartProducts.findAll()
+    // console.log('productId', foundIt)
+  }
+  //   //await currentCart.addProduct(id)
+  //   await currentCart.products.forEach((product) => {
+  //     if (product.id === id) {
+  //       console.log(
+  //         'product.cartproducts.quantity',
+  //         product.cartProducts.quantity
+  //       )
+  //       product.cartProducts.quantity += 1
+  //     }
+  //     console.log(
+  //       'product.cartproducts.quantity',
+  //       product.cartProducts.quantity
+  //     )
+  //   })
+  //   await currentCart.save()
+
+  // const productInCart = await currentCart.cartProducts.findOne({
+  //   where: {
+  //     cartId: currentCart.id,
+  //     productId: id,
+  //   },
+  // })
+  // // we want to update or add product
+  // productInCart.quantity += 1
+  //await productInCart.save()
+  //}
+  await currentCart.addProduct(id)
+}
 Cart.prototype.containsProduct = async function(productId) {
   let answer = false
   const productsInCart = await this.getProducts()
