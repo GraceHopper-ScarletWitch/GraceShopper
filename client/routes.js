@@ -5,7 +5,6 @@ import PropTypes from 'prop-types'
 import {me} from './store'
 import SingleProduct from './components/SingleProduct'
 import AllProducts from './components/AllProducts'
-// import Checkout from './components/checkout-form'
 import Checkout from './components/CheckoutPage'
 import Cart from './components/cart'
 import AllUsers from './components/AllUsers'
@@ -13,6 +12,7 @@ import {SignUp, LogIn} from './components'
 import SingleUser from './components/SingleUser'
 import OrderHistory from './components/OrderHistory'
 import {getCart} from './store/cart'
+import UserAccount from './components/UserAccount'
 
 /**
  * COMPONENT
@@ -48,7 +48,6 @@ class Routes extends Component {
         <Route path="/signup" component={SignUp} />
         <Route path="/checkout" component={Checkout} />
         <Route path="/cart" component={Cart} />
-        <Route path="/orderhistory" component={OrderHistory} />
         <Route path="/home" component={AllProducts} />
         <Route exact path="/" component={AllProducts} />
         {isLoggedIn && (
@@ -56,6 +55,8 @@ class Routes extends Component {
             {/* Routes placed here are only available after logging in */}
             <Route exact path="/admin/users" component={AllUsers} />
             <Route exact path="/admin/users/:id" component={SingleUser} />
+            <Route exact path="/myaccount" component={UserAccount} />
+            <Route path="/orderhistory" component={OrderHistory} />
           </Switch>
         )}
         {/* Displays our AllProducts component as a fallback */}
