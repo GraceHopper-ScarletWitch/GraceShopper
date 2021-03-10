@@ -9,6 +9,7 @@ import {connect} from 'react-redux'
 import {sendUserInfo} from '../store/user'
 import {getCheckedoutCart} from '../store/cart'
 import {Link} from 'react-router-dom'
+import {Divider} from '@material-ui/core/Divider'
 
 // eslint-disable-next-line no-shadow
 export const Checkout = ({user, isLoggedIn, sendUserInfo, checkout}) => {
@@ -56,6 +57,28 @@ export const Checkout = ({user, isLoggedIn, sendUserInfo, checkout}) => {
                 onChange={handleChange}
               />
             </Grid>
+            {!isLoggedIn ? (
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  id="email"
+                  name="email"
+                  label="Email"
+                  fullWidth
+                  onChange={handleChange}
+                />
+              </Grid>
+            ) : null}
+            <Grid item xs={12}>
+              <TextField
+                required
+                id="phone"
+                name="phone"
+                label="Phone Number"
+                fullWidth
+                onChange={handleChange}
+              />
+            </Grid>
             <Grid item xs={12}>
               <TextField
                 required
@@ -66,47 +89,7 @@ export const Checkout = ({user, isLoggedIn, sendUserInfo, checkout}) => {
                 onChange={handleChange}
               />
             </Grid>
-
-            {/* <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  id="city"
-                  name="city"
-                  label="City"
-                  fullWidth
-                  autoComplete="shipping address-level2"
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  id="state"
-                  name="state"
-                  label="State/Province/Region"
-                  fullWidth
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  id="zip"
-                  name="zip"
-                  label="Zip / Postal code"
-                  fullWidth
-                  autoComplete="shipping postal-code"
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  id="country"
-                  name="country"
-                  label="Country"
-                  fullWidth
-                  autoComplete="shipping country"
-                />
-              </Grid>
-
-              <Grid item xs={12}>
+            {/* <Grid item xs={12}>
                 <FormControlLabel
                   control={
                     <Checkbox
@@ -161,6 +144,9 @@ export const Checkout = ({user, isLoggedIn, sendUserInfo, checkout}) => {
                 fullWidth
                 autoComplete="cc-csc"
               />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField required fullWidth label="Billing Address" />
             </Grid>
             {/* <Grid item xs={12}>
                 <FormControlLabel
