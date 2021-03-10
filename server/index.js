@@ -57,7 +57,8 @@ const createApp = () => {
       secret: process.env.SESSION_SECRET || 'my best friend is Cody',
       store: sessionStore,
       resave: false,
-      saveUninitialized: false
+      //changed to true and will stop making new cart...keeps guestId persistent
+      saveUninitialized: true
     })
   )
 

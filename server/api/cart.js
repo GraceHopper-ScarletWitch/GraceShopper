@@ -6,37 +6,31 @@ module.exports = router
 // TODO: to check for guest user you can see if req.user has a value
 // TODO: remove check for hardcoded '1'
 
-// GET /api/cart/:id  update use userId <-- rewrite route to search for cart based off of userId
-router.get('/:userId', async (req, res, next) => {
-  console.log('This is the req.user', req.user)
-  console.log('USER ID', req.params.userId)
+// GET /api/cart/  update use userId <-- rewrite route to search for cart based off of userId
+router.get('/', async (req, res, next) => {
+  //incorporated req.user in route
   try {
-    if (req.params.userId !== '1') {
-      console.log('NOT 1')
-      const [userCart] = await Cart.findAll({
+    if (req.user) {
+      const [userCart] = await Cart.findOrCreate({
         include: Product,
         where: {
-          userId: Number(req.params.userId),
+          userId: req.user.id,
           active: true
         }
       })
-      console.log('IN THE GET ROUTE', userCart)
+      await userCart.reload()
       res.send(userCart)
-    } else if (req.params.userId === '1' && !req.session.cart) {
-      console.log('IN THE ELSE IF')
-      const newGuestCart = await Cart.create(req.params)
-      req.session.cart = newGuestCart
-      res.send(newGuestCart)
     } else {
-      console.log('IN THE ELSE')
-      const guestCart = await Cart.findByPk(req.session.cart.id, {
-        include: Product
+      const [guestCart] = await Cart.findOrCreate({
+        include: Product,
+        where: {
+          guestId: req.session.id,
+          active: true
+        }
       })
-      req.session.cart = guestCart
+      await guestCart.reload()
       res.send(guestCart)
     }
-
-    // await currentCart.save()
   } catch (err) {
     next(err)
   }
@@ -44,62 +38,102 @@ router.get('/:userId', async (req, res, next) => {
 
 // TODO: remove references to '1'
 // TODO: check if authenticated (if req.user should have access to this cart)
-// TODO: guest user if !req.user, you'll need to check if a session cart already exists
-
-// POST /api/cart/
-// Write route to create new cart
-// somehow this needs to be linked to a user.
-// First check to see if user has any active carts
-router.post('/', async (req, res, next) => {
-  try {
-    const newCart = await Cart.create(req.body) //userId
-    console.log('IS THIS THE LOG??', newCart)
-    if (req.body.userId === '1') {
-      req.session.cart = newCart
-    } else {
-      newCart.active = true
-    }
-    res.send(newCart)
-  } catch (error) {
-    console.log('Error in the POST /api/cart route', error)
-    next(error)
-  }
-})
-
-// TODO: remove references to '1'
-// TODO: check if authenticated (if req.user should have access to this cart)
 // TODO: guest user if !req.user
 
-// PUT /api/cart/:cartId  <---- make more concise (less API calls/ use instanc method)
-// *** can possibly be turned into an instance method **
-// I feel like I can rewrite this to be more concise...
-router.put('/:cartId', async (req, res, next) => {
+// PUT /api/cart/  <---- make more concise (less API calls/ use instanc method)
+
+router.put('/', async (req, res, next) => {
+  console.log('BODY', req.body.productId)
   try {
-    const currentCart = await Cart.findByPk(req.params.cartId, {
-      include: Product
-    })
-    if (await currentCart.containsProduct(Number(req.body.productId))) {
-      const productInCart = await CartProducts.findOne({
+    let arr
+    if (req.user) {
+      arr = await Cart.findOrCreate({
+        include: Product,
         where: {
-          cartId: currentCart.id,
-          productId: req.body.productId
+          userId: req.user.id,
+          active: true
         }
       })
-      productInCart.quantity += 1
-      await productInCart.save()
     } else {
-      await currentCart.addProduct(req.body.productId)
+      arr = await Cart.findOrCreate({
+        include: Product,
+        where: {
+          guestId: req.session.id,
+          active: true
+        }
+      })
     }
-    const updatedCart = await Cart.findByPk(req.params.cartId, {
-      include: Product
+    const cart = arr[0]
+    const [productInCart, created] = await CartProducts.findOrCreate({
+      where: {
+        cartId: cart.id,
+        productId: req.body.productId
+      }
     })
-    await updatedCart.save()
-    res.send(updatedCart)
+
+    if (!created) {
+      //found it and have to increment by 1
+      productInCart.quantity++
+      await productInCart.save()
+    }
+    await cart.reload() //reloads the cart from the db. get the new one if changed
+    await cart.save()
+    res.send(cart)
   } catch (error) {
-    console.log('error in the PUT /api/cart/:id route', error)
     next(error)
   }
 })
+
+// router.put('/', async (req, res, next) => {
+//   try {
+//     let arr
+//     if (req.user) {
+//       arr = await Cart.findOrCreate({
+//         include: Product,
+//         where: {
+//           userId: req.user.id,
+//           active: true,
+//         },
+//       })
+//       //await userCart.reload()
+//       //  res.send(userCart)
+//     } else {
+//       arr = await Cart.findOrCreate({
+//         include: Product,
+//         where: {
+//           guestId: req.session.id,
+//           active: true,
+//         },
+//       })
+//     }
+//     //access cart and whats inside
+//     // const currentCart = await Cart.findByPk(req.params.cartId, {
+//     //   include: Product,
+//     // })
+//     //Number() can be used to convert JavaScript variables to numbers
+//     //const productId = req.body.productId
+//     const cart = arr[0]
+//     const productInCart = await CartProducts.findOrCreate({
+//       where: {
+//         cartId: cart.id,
+//         productId: req.body.productId,
+//       },
+//     })
+
+//     console.log('findOrCreateInRoute', productInCart)
+
+//     await Cart.prototype.addProductToCart(productInCart)
+//     const updatedCart = await Cart.findByPk(req.params.cartId, {
+//       include: Product,
+//     })
+//     //await updatedCart.save()
+//     console.log('UPDATEDcART', updatedCart)
+//     res.send(updatedCart)
+//   } catch (error) {
+//     // console.log('error in the PUT /api/cart/:id route', error)
+//     next(error)
+//   }
+// })
 
 // TODO: remove references to '1'
 // TODO: check if authenticated (if req.user should have access to this cart)
@@ -107,17 +141,60 @@ router.put('/:cartId', async (req, res, next) => {
 
 // PUT /api/cart/checkout/:cartId
 // Need to add functionality to deduct from the product "inventory" when someone purchases an item
-router.put('/checkout/:cartId', async (req, res, next) => {
+// router.put('/checkout/:cartId', async (req, res, next) => {
+//   try {
+//     const currentCart = await Cart.findByPk(req.params.cartId)
+//     currentCart.active = false
+//     if (req.session.cart.id === Number(req.params.cartId)) {
+//       req.session.cart = null
+//     }
+//     await currentCart.save()
+//     res.send(currentCart)
+//   } catch (error) {
+//     console.log('error in the PUT /api/cart/checkout/:id route', error)
+//     next(error)
+//   }
+// })
+
+router.put('/checkout', async (req, res, next) => {
   try {
-    const currentCart = await Cart.findByPk(req.params.cartId)
-    currentCart.active = false
-    if (req.session.cart.id === Number(req.params.cartId)) {
-      req.session.cart = null
+    let arr
+    if (req.user) {
+      arr = await Cart.findOrCreate({
+        include: Product,
+        where: {
+          userId: req.user.id,
+          active: true
+        }
+      })
+    } else {
+      arr = await Cart.findOrCreate({
+        include: Product,
+        where: {
+          guestId: req.session.id,
+          active: true
+        }
+      })
     }
-    await currentCart.save()
-    res.send(currentCart)
+    const cart = arr[0]
+    await cart.reload()
+    for (let i = 0; i < cart.products.length; i++) {
+      const product = cart.products[i]
+      const quantity = product.cartProducts.quantity
+      if (quantity > product.inventory) {
+        return res.sendStatus(500)
+      }
+    }
+    for (let i = 0; i < cart.products.length; i++) {
+      const product = cart.products[i]
+      const quantity = product.cartProducts.quantity
+      product.inventory -= quantity
+      await product.save()
+    }
+    cart.active = false
+    await cart.save()
+    res.send(cart)
   } catch (error) {
-    console.log('error in the PUT /api/cart/checkout/:id route', error)
     next(error)
   }
 })
@@ -132,22 +209,30 @@ router.put('/checkout/:cartId', async (req, res, next) => {
 router.put('/removeItem/:cartId', async (req, res, next) => {
   try {
     const itemToRemove = await CartProducts.findByPk(req.body.productId)
+    //we call removeProductFromCart
+    //if product not found send error message
+    console.log('item to remove', itemToRemove)
     if (!itemToRemove) {
       res.status(404).send('not found')
-    } else if (itemToRemove.quantity > 1) {
-      itemToRemove.quantity -= 1
-      await itemToRemove.save()
-      const currentCart = await Cart.findByPk(req.params.cartId, {
-        include: Product
-      })
-      await currentCart.save()
-    } else {
-      itemToRemove.destroy()
-      const currentCart = await Cart.findByPk(req.params.cartId, {
-        include: Product
-      })
-      await currentCart.save()
+      //LINES 101 TO 115 MAY BE REMOVED IF SATISFACRORY PROTOTYPE FUNCTION
+      // } else if (itemToRemove.quantity > 1) {
+      //   itemToRemove.quantity -= 1
+      //   await itemToRemove.save()
+      //   const currentCart = await Cart.findByPk(req.params.cartId, {
+      //     include: Product,
+      //   })
+      //   await currentCart.save()
+      // } else {
+      //   // if item quantity is ===1?
+      //   itemToRemove.destroy()
+      //   //after I destroy i want to update
+
+      //   const currentCart = await Cart.findByPk(req.params.cartId, {
+      //     include: Product,
+      //   })
+      //   await currentCart.save()
     }
+    await Cart.prototype.removeProductFromCart(itemToRemove)
     const currentCart = await Cart.findByPk(req.params.cartId, {
       include: Product
     })

@@ -40,12 +40,12 @@ export const getCart = () => {
   }
 }
 
-export const getCartWithItemAdded = (cartId, productId) => {
+export const getCartWithItemAdded = productId => {
   console.log('THUNK CALLED')
   return async dispatch => {
     try {
       console.log('IN THE RETURN')
-      const {data: cart} = await axios.put(`/api/cart/${cartId}`, {
+      const {data: cart} = await axios.put('/api/cart/', {
         productId: productId
       })
       console.log('CART AFTER CALL', cart)
@@ -73,6 +73,7 @@ export const getCheckedoutCart = () => {
   console.log('CHECKOUT THUNK CALLED')
   return async dispatch => {
     try {
+      const {data: checkOut} = await axios.put('api/cart/checkout')
       // ADD CODE TO GO TO ROUTE WHICH NEEDS TO BE UPDATED!!!
       dispatch(checkoutCart())
     } catch (error) {

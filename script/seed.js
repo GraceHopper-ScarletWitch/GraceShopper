@@ -90,7 +90,7 @@ async function seed() {
   await createdCarts[0].save()
 
   console.log(`created ${createdCarts.length} carts`)
-
+  console.log(createdCarts)
   console.log(`seeded successfully`)
 }
 
