@@ -3,14 +3,16 @@ import {connect} from 'react-redux'
 import {
   getCart,
   getCartWithItemRemoved,
-  getCartWithItemAdded
+  getCartWithItemAdded,
+  getCheckedoutCart
 } from '../store/cart'
 import {Link} from 'react-router-dom'
 
 // get userId from state through mapStateToProps and update thunk to incorporate userId
 export class Cart extends React.Component {
-  addAnotherToCart(cartId, productId) {
-    this.props.getCartWithItemAdded(cartId, productId)
+  addAnotherToCart(productId) {
+    console.log('productId', productId)
+    this.props.getCartWithItemAdded(productId)
   }
   removeOneFromCart(cartId, productId) {
     this.props.getCartWithItemRemoved(cartId, productId)
@@ -41,7 +43,7 @@ export class Cart extends React.Component {
                   <div className="cart-button">
                     <button
                       type="button"
-                      onClick={() => this.addAnotherToCart(cart.id, product.id)}
+                      onClick={() => this.addAnotherToCart(product.id)}
                     >
                       +
                     </button>
@@ -77,7 +79,11 @@ export class Cart extends React.Component {
         {this.props.cart.subTotal > 0 ? (
           <div>
             <h3>Make Them Mine!</h3>
-            <button type="button" className="cart-checkout-button">
+            <button
+              type="button"
+              className="cart-checkout-button"
+              onClick={this.props.checkOut}
+            >
               <Link to="/checkout">Check Me Out!</Link>
             </button>
           </div>
@@ -99,8 +105,8 @@ const mapDispatchToProps = dispatch => ({
   getCart: () => dispatch(getCart()),
   getCartWithItemRemoved: (cartId, productId) =>
     dispatch(getCartWithItemRemoved(cartId, productId)),
-  getCartWithItemAdded: (cartId, productId) =>
-    dispatch(getCartWithItemAdded(cartId, productId))
+  getCartWithItemAdded: productId => dispatch(getCartWithItemAdded(productId)),
+  checkOut: () => dispatch(getCheckedoutCart())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart)

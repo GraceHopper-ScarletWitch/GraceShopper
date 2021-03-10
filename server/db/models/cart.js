@@ -13,6 +13,10 @@ const Cart = db.define('cart', {
   active: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
+  },
+  //if user not logged in this will signify which guest the cart belongs to
+  guestId: {
+    type: Sequelize.STRING
   }
 })
 
