@@ -9,16 +9,30 @@ const User = db.define('user', {
   email: {
     type: Sequelize.STRING,
     unique: true,
-    allowNull: false
+    allowNull: false,
+    validate: {
+      isEmail: true
+    }
   },
   phone: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    validate: {
+      is: /^[0-9]+$/,
+      max: 99999999999,
+      min: 1000000000
+    }
   },
   delivery: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    validate: {
+      isAlphanumeric: true
+    }
   },
   billing: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    validate: {
+      isAlphanumeric: true
+    }
   },
   userStatus: {
     type: Sequelize.ENUM('user', 'admin'),

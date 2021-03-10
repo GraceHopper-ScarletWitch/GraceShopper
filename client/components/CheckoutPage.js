@@ -11,6 +11,7 @@ import {getCheckedoutCart} from '../store/cart'
 import {Link} from 'react-router-dom'
 
 // eslint-disable-next-line no-shadow
+// eslint-disable-next-line complexity
 export const Checkout = ({user, isLoggedIn, sendUserInfo, checkout}) => {
   const [orderSubmitted, setOrderSubmitted] = useState(false)
   const handleChange = evt => {
@@ -40,73 +41,59 @@ export const Checkout = ({user, isLoggedIn, sendUserInfo, checkout}) => {
           </Typography>
           <br />
           <br />
+          <form onSubmit={handleSubmit}>
+            <Typography variant="h6" gutterBottom>
+              Shipping address
+            </Typography>
 
-          <Typography variant="h6" gutterBottom>
-            Shipping address
-          </Typography>
-
-          <Grid container spacing={3}>
-            <Grid item xs={12}>
-              <TextField
-                required
-                id="name"
-                name="name"
-                label="Full name"
-                fullWidth
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                required
-                id="delivery"
-                name="delivery"
-                label="Delivery Address"
-                fullWidth
-                onChange={handleChange}
-              />
-            </Grid>
-
-            {/* <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  id="city"
-                  name="city"
-                  label="City"
-                  fullWidth
-                  autoComplete="shipping address-level2"
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  id="state"
-                  name="state"
-                  label="State/Province/Region"
-                  fullWidth
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  id="zip"
-                  name="zip"
-                  label="Zip / Postal code"
-                  fullWidth
-                  autoComplete="shipping postal-code"
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  id="country"
-                  name="country"
-                  label="Country"
-                  fullWidth
-                  autoComplete="shipping country"
-                />
-              </Grid>
-
+            <Grid container spacing={3}>
               <Grid item xs={12}>
+                <TextField
+                  required
+                  id="name"
+                  name="name"
+                  label="Full Name"
+                  // value={user.name ? user.name : null}
+                  fullWidth
+                  onChange={handleChange}
+                />
+              </Grid>
+              {!isLoggedIn ? (
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    id="email"
+                    name="email"
+                    label="Email"
+                    // value={user.email ? user.email : null}
+                    fullWidth
+                    onChange={handleChange}
+                  />
+                </Grid>
+              ) : null}
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  id="phone"
+                  name="phone"
+                  label="Phone Number"
+                  // value={user.phone ? user.phone : null}
+                  fullWidth
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  id="delivery"
+                  name="delivery"
+                  label="Delivery Address"
+                  // value={user.delivery ? user.delivery : null}
+                  fullWidth
+                  onChange={handleChange}
+                />
+              </Grid>
+              {/* <Grid item xs={12}>
                 <FormControlLabel
                   control={
                     <Checkbox
@@ -118,68 +105,71 @@ export const Checkout = ({user, isLoggedIn, sendUserInfo, checkout}) => {
                   label="Use this address for payment details"
                 />
               </Grid> */}
-          </Grid>
-          <br />
-          <br />
-          <Typography variant="h6" gutterBottom>
-            Payment method
-          </Typography>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={6}>
-              <TextField
-                required
-                id="cardName"
-                label="Name on card"
-                fullWidth
-                autoComplete="cc-name"
-              />
             </Grid>
-            <Grid item xs={12} md={6}>
-              <TextField
-                required
-                id="cardNumber"
-                label="Card number"
-                fullWidth
-                autoComplete="cc-number"
-              />
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <TextField
-                required
-                id="expDate"
-                label="Expiry date"
-                fullWidth
-                autoComplete="cc-exp"
-              />
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <TextField
-                required
-                id="cvv"
-                label="CVV"
-                helperText="Last three digits on signature strip"
-                fullWidth
-                autoComplete="cc-csc"
-              />
-            </Grid>
-            {/* <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Checkbox color="secondary" name="saveCard" value="yes" />
-                  }
-                  label="Remember credit card details for next time"
+            <br />
+            <br />
+            <Typography variant="h6" gutterBottom>
+              Payment method
+            </Typography>
+            <Grid container spacing={3}>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  required
+                  id="cardName"
+                  label="Name on card"
+                  fullWidth
+                  autoComplete="cc-name"
                 />
-              </Grid> */}
-          </Grid>
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  required
+                  id="cardNumber"
+                  label="Card number"
+                  fullWidth
+                  autoComplete="cc-number"
+                />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  required
+                  id="expDate"
+                  label="Expiry date"
+                  fullWidth
+                  autoComplete="cc-exp"
+                />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  required
+                  id="cvv"
+                  label="CVV"
+                  helperText="Last three digits on signature strip"
+                  fullWidth
+                  autoComplete="cc-csc"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="billing"
+                  label="Billing Address"
+                  // value={user.billing ? user.billing : null}
+                  onChange={handleChange}
+                />
+              </Grid>
+            </Grid>
 
-          <Button
-            onClick={handleSubmit}
-            className={classes.button}
-            color="primary"
-            variant="contained"
-          >
-            Submit
-          </Button>
+            <Button
+              type="submit"
+              className={classes.button}
+              color="primary"
+              variant="contained"
+            >
+              Submit
+            </Button>
+          </form>
           <br />
           <br />
           {orderSubmitted ? (
@@ -213,9 +203,6 @@ const mapDispatch = dispatch => ({
 export default connect(mapState, mapDispatch)(Checkout)
 
 const useStyles = makeStyles(theme => ({
-  appBar: {
-    position: 'relative'
-  },
   layout: {
     width: 'auto',
     marginLeft: theme.spacing(2),
@@ -235,9 +222,6 @@ const useStyles = makeStyles(theme => ({
       marginBottom: theme.spacing(6),
       padding: theme.spacing(3)
     }
-  },
-  stepper: {
-    padding: theme.spacing(3, 0, 5)
   },
   buttons: {
     display: 'flex',
