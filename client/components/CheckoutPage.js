@@ -12,7 +12,13 @@ import {Link} from 'react-router-dom'
 
 // eslint-disable-next-line no-shadow
 // eslint-disable-next-line complexity
-export const Checkout = ({user, isLoggedIn, sendUserInfo, checkout}) => {
+export const Checkout = ({
+  user,
+  isLoggedIn,
+  sendUserInfo,
+  checkout,
+  cartId
+}) => {
   const [orderSubmitted, setOrderSubmitted] = useState(false)
   const handleChange = evt => {
     user[evt.target.name] = evt.target.value
@@ -178,7 +184,7 @@ export const Checkout = ({user, isLoggedIn, sendUserInfo, checkout}) => {
                 Thank you for your order.
               </Typography>
               <Typography variant="subtitle1">
-                Your order number is #2001539. We have emailed your order
+                Your order number is #{cartId}. We have emailed your order
                 confirmation, and will send you an update when your order has
                 shipped.
               </Typography>
@@ -192,7 +198,8 @@ export const Checkout = ({user, isLoggedIn, sendUserInfo, checkout}) => {
 
 const mapState = state => ({
   user: state.user,
-  isLoggedIn: !!state.user.id
+  isLoggedIn: !!state.user.id,
+  cartId: state.cart.id
 })
 
 const mapDispatch = dispatch => ({
