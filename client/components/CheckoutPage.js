@@ -9,7 +9,6 @@ import {connect} from 'react-redux'
 import {sendUserInfo} from '../store/user'
 import {getCheckedoutCart} from '../store/cart'
 import {Link} from 'react-router-dom'
-import {Divider} from '@material-ui/core/Divider'
 
 // eslint-disable-next-line no-shadow
 export const Checkout = ({user, isLoggedIn, sendUserInfo, checkout}) => {
@@ -41,55 +40,55 @@ export const Checkout = ({user, isLoggedIn, sendUserInfo, checkout}) => {
           </Typography>
           <br />
           <br />
+          <form onSubmit={handleSubmit}>
+            <Typography variant="h6" gutterBottom>
+              Shipping address
+            </Typography>
 
-          <Typography variant="h6" gutterBottom>
-            Shipping address
-          </Typography>
-
-          <Grid container spacing={3}>
-            <Grid item xs={12}>
-              <TextField
-                required
-                id="name"
-                name="name"
-                label="Full name"
-                fullWidth
-                onChange={handleChange}
-              />
-            </Grid>
-            {!isLoggedIn ? (
+            <Grid container spacing={3}>
               <Grid item xs={12}>
                 <TextField
                   required
-                  id="email"
-                  name="email"
-                  label="Email"
+                  id="name"
+                  name="name"
+                  label="Full name"
                   fullWidth
                   onChange={handleChange}
                 />
               </Grid>
-            ) : null}
-            <Grid item xs={12}>
-              <TextField
-                required
-                id="phone"
-                name="phone"
-                label="Phone Number"
-                fullWidth
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                required
-                id="delivery"
-                name="delivery"
-                label="Delivery Address"
-                fullWidth
-                onChange={handleChange}
-              />
-            </Grid>
-            {/* <Grid item xs={12}>
+              {!isLoggedIn ? (
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    id="email"
+                    name="email"
+                    label="Email"
+                    fullWidth
+                    onChange={handleChange}
+                  />
+                </Grid>
+              ) : null}
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  id="phone"
+                  name="phone"
+                  label="Phone Number"
+                  fullWidth
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  id="delivery"
+                  name="delivery"
+                  label="Delivery Address"
+                  fullWidth
+                  onChange={handleChange}
+                />
+              </Grid>
+              {/* <Grid item xs={12}>
                 <FormControlLabel
                   control={
                     <Checkbox
@@ -101,71 +100,64 @@ export const Checkout = ({user, isLoggedIn, sendUserInfo, checkout}) => {
                   label="Use this address for payment details"
                 />
               </Grid> */}
-          </Grid>
-          <br />
-          <br />
-          <Typography variant="h6" gutterBottom>
-            Payment method
-          </Typography>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={6}>
-              <TextField
-                required
-                id="cardName"
-                label="Name on card"
-                fullWidth
-                autoComplete="cc-name"
-              />
             </Grid>
-            <Grid item xs={12} md={6}>
-              <TextField
-                required
-                id="cardNumber"
-                label="Card number"
-                fullWidth
-                autoComplete="cc-number"
-              />
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <TextField
-                required
-                id="expDate"
-                label="Expiry date"
-                fullWidth
-                autoComplete="cc-exp"
-              />
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <TextField
-                required
-                id="cvv"
-                label="CVV"
-                helperText="Last three digits on signature strip"
-                fullWidth
-                autoComplete="cc-csc"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField required fullWidth label="Billing Address" />
-            </Grid>
-            {/* <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Checkbox color="secondary" name="saveCard" value="yes" />
-                  }
-                  label="Remember credit card details for next time"
+            <br />
+            <br />
+            <Typography variant="h6" gutterBottom>
+              Payment method
+            </Typography>
+            <Grid container spacing={3}>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  required
+                  id="cardName"
+                  label="Name on card"
+                  fullWidth
+                  autoComplete="cc-name"
                 />
-              </Grid> */}
-          </Grid>
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  required
+                  id="cardNumber"
+                  label="Card number"
+                  fullWidth
+                  autoComplete="cc-number"
+                />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  required
+                  id="expDate"
+                  label="Expiry date"
+                  fullWidth
+                  autoComplete="cc-exp"
+                />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  required
+                  id="cvv"
+                  label="CVV"
+                  helperText="Last three digits on signature strip"
+                  fullWidth
+                  autoComplete="cc-csc"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField required fullWidth label="Billing Address" />
+              </Grid>
+            </Grid>
 
-          <Button
-            onClick={handleSubmit}
-            className={classes.button}
-            color="primary"
-            variant="contained"
-          >
-            Submit
-          </Button>
+            <Button
+              type="submit"
+              className={classes.button}
+              color="primary"
+              variant="contained"
+            >
+              Submit
+            </Button>
+          </form>
           <br />
           <br />
           {orderSubmitted ? (
