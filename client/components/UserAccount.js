@@ -13,11 +13,13 @@ import {
   ListItemText,
   Divider,
   ListItemSecondaryAction,
-  Card
+  Card,
+  Link
 } from '@material-ui/core'
 
 // import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
+import {EditInfo} from './EditInfo'
 
 export const MyAccount = ({user}) => {
   return (
@@ -33,7 +35,7 @@ export const MyAccount = ({user}) => {
             <ListItemText
               primary={user.name ? user.name : 'no info provided'}
             />
-            <ListItemSecondaryAction>
+            <ListItemSecondaryAction to="/editaccount" component={Link}>
               <ListItem button edge="end">
                 Edit
               </ListItem>

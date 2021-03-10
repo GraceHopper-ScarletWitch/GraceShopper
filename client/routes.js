@@ -13,6 +13,7 @@ import SingleUser from './components/SingleUser'
 import OrderHistory from './components/OrderHistory'
 import {getCart} from './store/cart'
 import UserAccount from './components/UserAccount'
+import EditInfo from './components/EditInfo'
 
 /**
  * COMPONENT
@@ -57,6 +58,7 @@ class Routes extends Component {
             <Route exact path="/admin/users/:id" component={SingleUser} />
             <Route exact path="/myaccount" component={UserAccount} />
             <Route path="/orderhistory" component={OrderHistory} />
+            <Route path="/editaccount" component={EditInfo} />
           </Switch>
         )}
         {/* Displays our AllProducts component as a fallback */}

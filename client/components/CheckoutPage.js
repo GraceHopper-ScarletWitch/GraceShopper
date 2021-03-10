@@ -52,8 +52,8 @@ export const Checkout = ({user, isLoggedIn, sendUserInfo, checkout}) => {
                   required
                   id="name"
                   name="name"
-                  label={user.name ? null : 'Full Name'}
-                  value={user.name ? user.name : null}
+                  label="Full Name"
+                  // value={user.name ? user.name : null}
                   fullWidth
                   onChange={handleChange}
                 />
@@ -64,8 +64,8 @@ export const Checkout = ({user, isLoggedIn, sendUserInfo, checkout}) => {
                     required
                     id="email"
                     name="email"
-                    label={user.email ? null : 'Email'}
-                    value={user.email ? user.email : null}
+                    label="Email"
+                    // value={user.email ? user.email : null}
                     fullWidth
                     onChange={handleChange}
                   />
@@ -76,8 +76,8 @@ export const Checkout = ({user, isLoggedIn, sendUserInfo, checkout}) => {
                   required
                   id="phone"
                   name="phone"
-                  label={user.phone ? null : 'Phone Number'}
-                  value={user.phone ? user.phone : null}
+                  label="Phone Number"
+                  // value={user.phone ? user.phone : null}
                   fullWidth
                   onChange={handleChange}
                 />
@@ -87,8 +87,8 @@ export const Checkout = ({user, isLoggedIn, sendUserInfo, checkout}) => {
                   required
                   id="delivery"
                   name="delivery"
-                  label={user.delivery ? null : 'Delivery Address'}
-                  value={user.delivery ? user.delivery : null}
+                  label="Delivery Address"
+                  // value={user.delivery ? user.delivery : null}
                   fullWidth
                   onChange={handleChange}
                 />
@@ -154,8 +154,8 @@ export const Checkout = ({user, isLoggedIn, sendUserInfo, checkout}) => {
                   required
                   fullWidth
                   name="billing"
-                  label={user.billing ? null : 'Billing Address'}
-                  value={user.billing ? user.billing : null}
+                  label="Billing Address"
+                  // value={user.billing ? user.billing : null}
                   onChange={handleChange}
                 />
               </Grid>
