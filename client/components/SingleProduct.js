@@ -14,7 +14,7 @@ export class SingleProduct extends React.Component {
   }
 
   addItemToCart(productId) {
-    this.props.getCartWithItemAdded(this.props.cart.id, productId)
+    this.props.getCartWithItemAdded(productId)
   }
 
   render() {
@@ -54,8 +54,7 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => ({
   getProduct: id => dispatch(getProduct(id)),
-  getCartWithItemAdded: (cartId, productId) =>
-    dispatch(getCartWithItemAdded(cartId, productId))
+  getCartWithItemAdded: productId => dispatch(getCartWithItemAdded(productId))
 })
 
 export default connect(mapState, mapDispatch)(SingleProduct)

@@ -21,22 +21,23 @@ import EditInfo from './components/EditInfo'
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData()
-    console.log('USER?', this.props.user)
-    if (this.props.user.id) {
-      console.log('THRE IS A USER ID', this.props.user.id)
-    } else {
-      console.log('NO USER ID', this.props.user)
-    }
+    // console.log('USER?', this.props.user)
+    // if (this.props.user.id) {
+    //   console.log('THRE IS A USER ID', this.props.user.id)
+    // } else {
+    //   console.log('NO USER ID', this.props.user)
+    // }
+    // this.props.loadCart()
     this.props.loadCart()
   }
-  componentDidUpdate(prevProps) {
-    const user = this.props.user
-    console.log('IN THE UPDATE', user)
-    if (!prevProps.user.id && user.id) {
-      console.log('IN THE UPDATE', this.props.user)
-      this.props.loadCart()
-    }
-  }
+  // componentDidUpdate(prevProps) {
+  //   const user = this.props.user
+  //   console.log('IN THE UPDATE', user)
+  //   if (!prevProps.user.id && user.id) {
+  //     console.log('IN THE UPDATE', this.props.user)
+  //     this.props.loadCart()
+  //   }
+  // }
 
   render() {
     const {isLoggedIn} = this.props
