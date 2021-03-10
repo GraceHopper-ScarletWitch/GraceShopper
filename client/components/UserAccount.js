@@ -6,45 +6,99 @@ import {
   Phone,
   Payment
 } from '@material-ui/icons'
-import {Grid, Paper} from '@material-ui/core'
+import {
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Divider,
+  ListItemSecondaryAction,
+  Card
+} from '@material-ui/core'
 
 // import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 
 export const MyAccount = ({user}) => {
   return (
-    <div style={{display: 'inline-block'}}>
+    <div>
       <br />
       <br />
-      <Paper style={{padding: '20px'}} elevation={2}>
-        <Grid container direction="column" alignItems="flex-start">
-          <Grid item>
-            <Face />
-            {user.name ? user.name : 'no name provided'}
-          </Grid>
-          <br />
-          <Grid item>
-            <Email />
-            {user.email}
-          </Grid>
-          <br />
-          <Grid item>
-            <Phone />
-            {user.phone ? user.phone : 'no phone number provided'}
-          </Grid>
-          <br />
-          <Grid item>
-            <MarkunreadMailbox />
-            Delivery:{user.delivery ? user.delivery : 'no address provided'}
-          </Grid>
-          <br />
-          <Grid item>
-            <Payment />
-            Billing:
-            {user.billing ? user.billing : 'no address provided'}
-          </Grid>
-        </Grid>
-      </Paper>
+      <Card style={{margin: '0px 300px 0px 300px'}}>
+        <List>
+          <ListItem>
+            <ListItemIcon>
+              <Face />
+            </ListItemIcon>
+            <ListItemText
+              primary={user.name ? user.name : 'no info provided'}
+            />
+            <ListItemSecondaryAction>
+              <ListItem button edge="end">
+                Edit
+              </ListItem>
+            </ListItemSecondaryAction>
+          </ListItem>
+          <Divider />
+
+          <ListItem>
+            <ListItemIcon>
+              <Email />
+            </ListItemIcon>
+            <ListItemText primary={user.email} />
+            <ListItemSecondaryAction>
+              <ListItem button edge="end">
+                Edit
+              </ListItem>
+            </ListItemSecondaryAction>
+          </ListItem>
+          <Divider />
+
+          <ListItem>
+            <ListItemIcon>
+              <Phone />
+            </ListItemIcon>
+            <ListItemText
+              primary={user.phone ? user.phone : 'no phone number provided'}
+            />
+            <ListItemSecondaryAction>
+              <ListItem button edge="end">
+                Edit
+              </ListItem>
+            </ListItemSecondaryAction>
+          </ListItem>
+          <Divider />
+
+          <ListItem>
+            <ListItemIcon>
+              <MarkunreadMailbox />
+            </ListItemIcon>
+            <ListItemText
+              primary={user.delivery ? user.delivery : 'no address provided'}
+            />
+            <ListItemSecondaryAction>
+              <ListItem button edge="end">
+                Edit
+              </ListItem>
+            </ListItemSecondaryAction>
+          </ListItem>
+          <Divider />
+
+          <ListItem>
+            <ListItemIcon>
+              <Payment />
+            </ListItemIcon>
+            <ListItemText
+              primary={user.billing ? user.user.billing : 'no address provided'}
+            />
+            <ListItemSecondaryAction>
+              <ListItem button edge="end">
+                Edit
+              </ListItem>
+            </ListItemSecondaryAction>
+          </ListItem>
+        </List>
+      </Card>
     </div>
   )
 }
