@@ -11,6 +11,7 @@ import {getCheckedoutCart} from '../store/cart'
 import {Link} from 'react-router-dom'
 
 // eslint-disable-next-line no-shadow
+// eslint-disable-next-line complexity
 export const Checkout = ({user, isLoggedIn, sendUserInfo, checkout}) => {
   const [orderSubmitted, setOrderSubmitted] = useState(false)
   const handleChange = evt => {
@@ -51,7 +52,8 @@ export const Checkout = ({user, isLoggedIn, sendUserInfo, checkout}) => {
                   required
                   id="name"
                   name="name"
-                  label="Full name"
+                  label={user.name ? null : 'Full Name'}
+                  value={user.name ? user.name : null}
                   fullWidth
                   onChange={handleChange}
                 />
@@ -62,7 +64,8 @@ export const Checkout = ({user, isLoggedIn, sendUserInfo, checkout}) => {
                     required
                     id="email"
                     name="email"
-                    label="Email"
+                    label={user.email ? null : 'Email'}
+                    value={user.email ? user.email : null}
                     fullWidth
                     onChange={handleChange}
                   />
@@ -73,7 +76,8 @@ export const Checkout = ({user, isLoggedIn, sendUserInfo, checkout}) => {
                   required
                   id="phone"
                   name="phone"
-                  label="Phone Number"
+                  label={user.phone ? null : 'Phone Number'}
+                  value={user.phone ? user.phone : null}
                   fullWidth
                   onChange={handleChange}
                 />
@@ -83,7 +87,8 @@ export const Checkout = ({user, isLoggedIn, sendUserInfo, checkout}) => {
                   required
                   id="delivery"
                   name="delivery"
-                  label="Delivery Address"
+                  label={user.delivery ? null : 'Delivery Address'}
+                  value={user.delivery ? user.delivery : null}
                   fullWidth
                   onChange={handleChange}
                 />
@@ -145,7 +150,14 @@ export const Checkout = ({user, isLoggedIn, sendUserInfo, checkout}) => {
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField required fullWidth label="Billing Address" />
+                <TextField
+                  required
+                  fullWidth
+                  name="billing"
+                  label={user.billing ? null : 'Billing Address'}
+                  value={user.billing ? user.billing : null}
+                  onChange={handleChange}
+                />
               </Grid>
             </Grid>
 
@@ -191,9 +203,6 @@ const mapDispatch = dispatch => ({
 export default connect(mapState, mapDispatch)(Checkout)
 
 const useStyles = makeStyles(theme => ({
-  appBar: {
-    position: 'relative'
-  },
   layout: {
     width: 'auto',
     marginLeft: theme.spacing(2),
@@ -213,9 +222,6 @@ const useStyles = makeStyles(theme => ({
       marginBottom: theme.spacing(6),
       padding: theme.spacing(3)
     }
-  },
-  stepper: {
-    padding: theme.spacing(3, 0, 5)
   },
   buttons: {
     display: 'flex',

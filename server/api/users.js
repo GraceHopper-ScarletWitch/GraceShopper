@@ -44,7 +44,8 @@ router.put('/', async (req, res, next) => {
     await req.user.update({
       name: req.body.name,
       delivery: req.body.delivery,
-      phone: req.body.phone
+      phone: req.body.phone,
+      billing: req.body.billing
     })
 
     res.json(req.user)

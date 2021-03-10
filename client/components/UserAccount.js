@@ -89,7 +89,7 @@ export const MyAccount = ({user}) => {
               <Payment />
             </ListItemIcon>
             <ListItemText
-              primary={user.billing ? user.user.billing : 'no address provided'}
+              primary={user.billing ? user.billing : 'no address provided'}
             />
             <ListItemSecondaryAction>
               <ListItem button edge="end">
