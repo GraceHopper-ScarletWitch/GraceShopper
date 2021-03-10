@@ -13,9 +13,9 @@ import {
   ListItemText,
   Divider,
   ListItemSecondaryAction,
-  Card,
-  Link
+  Card
 } from '@material-ui/core'
+import {Link} from 'react-router-dom'
 
 // import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
@@ -35,8 +35,8 @@ export const MyAccount = ({user}) => {
             <ListItemText
               primary={user.name ? user.name : 'no info provided'}
             />
-            <ListItemSecondaryAction to="/editaccount" component={Link}>
-              <ListItem button edge="end">
+            <ListItemSecondaryAction>
+              <ListItem component={Link} to="/editaccount" edge="end">
                 Edit
               </ListItem>
             </ListItemSecondaryAction>
@@ -49,7 +49,7 @@ export const MyAccount = ({user}) => {
             </ListItemIcon>
             <ListItemText primary={user.email} />
             <ListItemSecondaryAction>
-              <ListItem button edge="end">
+              <ListItem component={Link} to="/editaccount" edge="end">
                 Edit
               </ListItem>
             </ListItemSecondaryAction>
@@ -64,7 +64,7 @@ export const MyAccount = ({user}) => {
               primary={user.phone ? user.phone : 'no phone number provided'}
             />
             <ListItemSecondaryAction>
-              <ListItem button edge="end">
+              <ListItem component={Link} to="/editaccount" edge="end">
                 Edit
               </ListItem>
             </ListItemSecondaryAction>
@@ -79,7 +79,7 @@ export const MyAccount = ({user}) => {
               primary={user.delivery ? user.delivery : 'no address provided'}
             />
             <ListItemSecondaryAction>
-              <ListItem button edge="end">
+              <ListItem component={Link} to="/editaccount" edge="end">
                 Edit
               </ListItem>
             </ListItemSecondaryAction>
@@ -94,7 +94,7 @@ export const MyAccount = ({user}) => {
               primary={user.billing ? user.billing : 'no address provided'}
             />
             <ListItemSecondaryAction>
-              <ListItem button edge="end">
+              <ListItem component={Link} to="/editaccount" edge="end">
                 Edit
               </ListItem>
             </ListItemSecondaryAction>
