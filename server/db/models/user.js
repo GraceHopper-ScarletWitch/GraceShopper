@@ -15,24 +15,13 @@ const User = db.define('user', {
     }
   },
   phone: {
-    type: Sequelize.STRING,
-    validate: {
-      is: /^[0-9]+$/,
-      max: 99999999999,
-      min: 1000000000
-    }
+    type: Sequelize.STRING
   },
   delivery: {
-    type: Sequelize.STRING,
-    validate: {
-      isAlphanumeric: true
-    }
+    type: Sequelize.STRING
   },
   billing: {
-    type: Sequelize.STRING,
-    validate: {
-      isAlphanumeric: true
-    }
+    type: Sequelize.STRING
   },
   userStatus: {
     type: Sequelize.ENUM('user', 'admin'),
